@@ -1,0 +1,19 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  column-gap: 100px;
+  padding: 20px;
+  background-color: grey;
+}
+
+.footer__school {
+  width: 100px;
+  height: 50px;
+  background-image: url(./../../../../assets/images/rs_school.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}

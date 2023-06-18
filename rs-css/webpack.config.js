@@ -13,7 +13,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash:8].js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: path.join('assets', '[name].[contenthash:8][ext]'),
+    assetModuleFilename: 'assets/[name].[contenthash:8][ext]',
     clean: true,
   },
   module: {
@@ -21,6 +21,10 @@ module.exports = {
       {
         test: /\.html$/i,
         loader: 'html-loader',
+      },
+      {
+        test: /\.ts$/i,
+        use: 'ts-loader',
       },
       {
         test: /\.scss$/,

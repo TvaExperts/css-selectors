@@ -1,11 +1,12 @@
-import FooterView from './view/footer/footer-view';
-import HeaderView from './view/header/header-view';
-import MainView from './view/main/main-view';
+import Controller from './controller/controller';
+import AppView from './view/appView';
 
 export default class App {
+  private view: AppView;
+  private controller: Controller;
+
   constructor() {
-    document.body.append(new HeaderView().getHtmlElement());
-    document.body.append(new MainView().getHtmlElement());
-    document.body.append(new FooterView().getHtmlElement());
+    this.view = new AppView();
+    this.controller = new Controller(this.view);
   }
 }

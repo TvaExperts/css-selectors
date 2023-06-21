@@ -5,7 +5,7 @@ export default class ElementCreator {
 
   constructor(params: ElementParams) {
     this.element = document.createElement(params.tag);
-    this.setCssClasses(params.classNames);
+    this.addCssClasses(params.classNames);
     this.setTextContent(params.textContent);
   }
 
@@ -25,8 +25,16 @@ export default class ElementCreator {
     this.element.setAttribute(atribute, value);
   }
 
-  private setCssClasses(cssClasses: string[] = []): void {
-    this.element.classList.add(...cssClasses);
+  public addCssClasses(cssClasses: string[] = []): void {
+    if (cssClasses.length) this.element.classList.add(...cssClasses);
+  }
+
+  public removeCssClass(className: string[]): void {
+    this.element.classList.remove(...className);
+  }
+
+  public removeInnerElements(): void {
+    this.element.innerHTML = '';
   }
 
   setTextContent(text: string = ''): void {

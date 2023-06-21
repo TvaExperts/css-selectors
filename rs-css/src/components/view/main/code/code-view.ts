@@ -17,5 +17,10 @@ export default class CodeView extends View {
     this.configureView();
   }
 
-  configureView() {}
+  private configureView() {}
+
+  public setCode(code: HTMLElement) {
+    this.viewElementCreator.removeInnerElements();
+    this.viewElementCreator.addInnerElement(code);
+  }
 }

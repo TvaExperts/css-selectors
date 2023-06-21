@@ -20,7 +20,7 @@ export default class HeaderView extends View {
     this.configureView();
   }
 
-  configureView() {
+  private configureView(): void {
     const helpElementCreator: ElementCreator = new ElementCreator({
       tag: 'a',
       classNames: [CssClasses.HELP],

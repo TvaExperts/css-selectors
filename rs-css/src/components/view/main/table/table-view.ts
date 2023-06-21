@@ -17,5 +17,5 @@ export default class TableView extends View {
     this.configureView();
   }
 
-  configureView() {}
+  private configureView() {}
 }

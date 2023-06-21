@@ -25,7 +25,7 @@ export default class FooterView extends View {
     this.configureView();
   }
 
-  configureView() {
+  private configureView() {
     const gitElementCreator: ElementCreator = new ElementCreator({
       tag: 'a',
       classNames: [CssClasses.GITHUB],

@@ -1,72 +1,50 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
-/* eslint-disable import/no-extraneous-dependencies */
-
-import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/qtcreator-dark.css';
-
 import { LevelConfigs, LevelData, TagsHTML } from '../../data/levels';
-import ElementParams from '../util/types';
-import ElementCreator from '../util/element-creator';
 import Level from './types';
+import getRandomStr from '../util/utils';
+
+const HASH_LENGTH: number = 12;
 
 export default class Model {
   public levels: Level[];
+  public currentLevel: Level | null;
 
   constructor() {
     this.levels = [];
-    hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
+    this.currentLevel = null;
+
     this.initLevelsData();
   }
 
-  initLevelsData() {
+  public getCurrentLevel(): Level | null {
+    return this.currentLevel;
+  }
+
+  public setCurrentLevel(levelId: string): void {
+    const newLevel = this.levels.find((level) => level.id === levelId);
+    if (newLevel && newLevel !== this.currentLevel) this.currentLevel = newLevel;
+  }
+
+  private initLevelsData(): void {
     LevelData.forEach((levelConfigs: LevelConfigs) => {
       const level: Level = levelConfigs;
-      const params: ElementParams = {
-        tag: 'div',
-        classNames: [],
-        textContent: '',
-      };
-      const table: ElementCreator = new ElementCreator(params);
-      table.getElement().innerHTML = this.getHighlightedTags('<div class="table">');
-      level.markup.forEach((tag: TagsHTML) => {
-        table.addInnerElement(this.createHTMLTags(tag));
-      });
-
-      table.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags('</div>'));
-      level.HTML = table.getElement();
+      level.hashs = [];
+      level.markup = this.getMarkupWithHashes(level.markup, level);
       this.levels.push(level);
     });
   }
 
-  createHTMLTags(markup: TagsHTML): HTMLElement {
-    const params: ElementParams = {
-      tag: 'div',
-      classNames: [],
-      textContent: '',
-    };
-    const result: ElementCreator = new ElementCreator(params);
-
-    if (markup.children && markup.children.length) {
-      result.getElement().innerHTML = this.getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
-
-      markup.children.forEach((child: TagsHTML) => result.addInnerElement(this.createHTMLTags(child)));
-
-      result.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags(`</${markup.tagName}>`));
-    } else {
-      result.getElement().innerHTML = this.getHighlightedTags(`<${this.getTagForHighlight(markup)} />`);
-    }
-    return result.getElement();
-  }
-
-  private getTagForHighlight(markup: TagsHTML): string {
-    let result: string = markup.tagName;
-    if (markup.className) result += ` class="${markup.className}"`;
-    if (markup.idName) result += ` id="${markup.idName}"`;
+  private getMarkupWithHashes(markup: TagsHTML[], level: Level): TagsHTML[] {
+    const result: TagsHTML[] = [];
+    markup.forEach((tag: TagsHTML) => {
+      const newTag = tag;
+      if (newTag.children && newTag.children.length) {
+        newTag.children = this.getMarkupWithHashes(newTag.children, level);
+      }
+      const hash: string = getRandomStr(HASH_LENGTH);
+      level.hashs?.push(hash);
+      newTag.hash = hash;
+      result.push(newTag);
+    });
     return result;
-  }
-
-  private getHighlightedTags(str: string): string {
-    return hljs.highlight(str, { language: 'xml' }).value;
   }
 }

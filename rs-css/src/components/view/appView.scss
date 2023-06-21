@@ -1,0 +1,52 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  column-gap: 100px;
+  padding: 20px;
+  background-color: grey;
+}
+
+.main {
+  flex-grow: 1;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  background: darkolivegreen;
+}
+
+.aside {
+  position: fixed;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  padding: 5px;
+  background-color: brown;
+}
+
+.aside__title {
+  padding: 10px;
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  column-gap: 100px;
+  padding: 20px;
+  background-color: grey;
+}
+
+.footer__school {
+  width: 100px;
+  height: 50px;
+  background-image: url(../../../assets/images/rs_school.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}

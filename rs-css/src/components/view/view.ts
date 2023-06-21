@@ -1,6 +1,6 @@
 import ElementParams from '../util/types';
 import ElementCreator from '../util/element-creator';
-import ViewParams from './types';
+import { ViewParams } from './types';
 
 export default class View {
   viewElementCreator: ElementCreator;

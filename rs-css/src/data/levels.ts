@@ -10,6 +10,7 @@ type TagsHTML = {
   className?: string;
   idName?: string;
   children?: TagsHTML[];
+  hash?: string;
 };
 
 const LevelData: LevelConfigs[] = [

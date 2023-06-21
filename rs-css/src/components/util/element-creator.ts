@@ -37,7 +37,7 @@ export default class ElementCreator {
     this.element.innerHTML = '';
   }
 
-  setTextContent(text: string = ''): void {
+  public setTextContent(text: string = ''): void {
     this.element.textContent = text;
   }
 }

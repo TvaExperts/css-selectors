@@ -10,16 +10,26 @@ export default class Controller {
     this.view = view;
     this.model = new Model();
     this.initData();
+    this.initCallbacks();
   }
 
-  private initData() {
-    this.view.aside.createLevelsList(this.model.levels, this.loadLevel.bind(this));
+  private initData(): void {
+    this.view.addLevels(this.model.levels);
   }
 
-  private loadLevel(levelId: string) {
-    const level: Level | undefined = this.model.levels.find((item: Level) => item.id === levelId);
+  private initCallbacks(): void {
+    this.view.setClickLevelCallback(this.loadLevel.bind(this));
+    this.view.setHoverElementCallback(this.showTargetElement.bind(this));
+  }
+
+  private showTargetElement(hash: string): void {
+    this.view.showTargetElement(hash);
+  }
+
+  private loadLevel(levelId: string): void {
+    this.model.setCurrentLevel(levelId);
+    const level: Level | null = this.model.getCurrentLevel();
     if (!level) throw new Error('Err!');
-    this.view.aside.selectLevel(level.id);
-    this.view.main.setNewLevel(level);
+    this.view.setNewLevel(level);
   }
 }

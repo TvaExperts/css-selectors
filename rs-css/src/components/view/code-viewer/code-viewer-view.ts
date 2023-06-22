@@ -9,23 +9,20 @@ import './code.scss';
 // import ElementCreator from '../../../util/element-creator';
 import { ViewParams } from '../types';
 import View from '../view';
-import { TagsHTML } from '../../../data/levels';
+import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
+import { CssClasses } from './types';
 
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 
-const CssClasses = {
-  CODE: 'game__code',
-};
-
-export default class CodeView extends View {
+export default class CodeViewerView extends View {
   elements: Map<string, HTMLElement>;
 
   constructor() {
     const params: ViewParams = {
       tag: 'div',
-      classNames: [CssClasses.CODE],
+      classNames: [CssClasses.CODE_VIEWER],
     };
     super(params);
     this.elements = new Map<string, HTMLElement>();
@@ -38,7 +35,7 @@ export default class CodeView extends View {
       while (target !== this.getHtmlElement()) {
         if (!target || !(target instanceof Element)) return;
         if (target.tagName === 'DIV') {
-          const hoverDivHash: string | null = target.getAttribute('hash');
+          const hoverDivHash: string | null = target.getAttribute('sign');
           if (hoverDivHash) {
             callback(hoverDivHash);
           } else {
@@ -52,36 +49,36 @@ export default class CodeView extends View {
     this.getHtmlElement().addEventListener('mouseleave', () => callback(''));
   }
 
-  public setNewCode(markup: TagsHTML[]) {
+  public setNewCode(markup: GameHTMLTag[]) {
     this.viewElementCreator.removeInnerElements();
     this.viewElementCreator.addInnerElement(this.buildHTMLCode(markup));
   }
 
-  private removeBold(): void {
+  private removeSelection(): void {
     this.elements.forEach((element: HTMLElement) => {
       const nodes = element.children;
       for (let i = 0; i < nodes.length; i += 1) {
         if (nodes[i].tagName === 'SPAN') {
-          nodes[i].classList.remove('select-line');
+          nodes[i].classList.remove(CssClasses.SELECTED_LINE);
         }
       }
     });
   }
 
   public showSelectedItem(hash: string = ''): void {
-    this.removeBold();
+    this.removeSelection();
     if (!hash) return;
     const elemetn = this.elements.get(hash);
     if (!elemetn) return;
     const nodes = elemetn.children;
     for (let i = 0; i < nodes.length; i += 1) {
       if (nodes[i].tagName === 'SPAN') {
-        nodes[i].classList.add('select-line');
+        nodes[i].classList.add(CssClasses.SELECTED_LINE);
       }
     }
   }
 
-  private buildHTMLCode(markup: TagsHTML[]): HTMLElement {
+  private buildHTMLCode(markup: GameHTMLTag[]): HTMLElement {
     const params: ElementParams = {
       tag: 'div',
       classNames: [],
@@ -89,30 +86,29 @@ export default class CodeView extends View {
     };
     const table: ElementCreator = new ElementCreator(params);
     table.getElement().innerHTML = this.getHighlightedTags('<div class="table">');
-
-    markup.forEach((tag: TagsHTML) => {
-      const el: HTMLElement = this.createHTMLTags(tag);
-      if (tag.hash) this.elements?.set(tag.hash, el);
-      table.addInnerElement(el);
+    markup.forEach((tag: GameHTMLTag) => {
+      const element: HTMLElement = this.createHTMLTags(tag);
+      if (tag.signElement) this.elements?.set(tag.signElement, element);
+      table.addInnerElement(element);
     });
     table.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags('</div>'));
     return table.getElement();
   }
 
-  private createHTMLTags(markup: TagsHTML): HTMLElement {
+  private createHTMLTags(markup: GameHTMLTag): HTMLElement {
     const params: ElementParams = {
       tag: 'div',
       classNames: [],
       textContent: '',
     };
     const result: ElementCreator = new ElementCreator(params);
-    if (markup.hash) result.setAttribute('hash', markup.hash);
+    if (markup.signElement) result.setAttribute('sign', markup.signElement);
     if (markup.children && markup.children.length) {
       result.getElement().innerHTML = this.getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
 
-      markup.children.forEach((child: TagsHTML) => {
+      markup.children.forEach((child: GameHTMLTag) => {
         const el: HTMLElement = this.createHTMLTags(child);
-        if (child.hash) this.elements?.set(child.hash, el);
+        if (child.signElement) this.elements?.set(child.signElement, el);
         result.addInnerElement(el);
       });
       result.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags(`</${markup.tagName}>`));
@@ -122,7 +118,7 @@ export default class CodeView extends View {
     return result.getElement();
   }
 
-  private getTagForHighlight(markup: TagsHTML): string {
+  private getTagForHighlight(markup: GameHTMLTag): string {
     let result: string = markup.tagName;
     if (markup.className) result += ` class="${markup.className}"`;
     if (markup.idName) result += ` id="${markup.idName}"`;

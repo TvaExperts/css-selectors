@@ -1,8 +1,8 @@
 import { LevelConfigs } from '../../data/levels';
 
 interface Level extends LevelConfigs {
-  HTML?: HTMLElement;
-  hashs?: string[];
+  signs?: string[];
+  winSigns?: string[];
 }
 
 export default Level;

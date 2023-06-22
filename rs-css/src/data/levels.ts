@@ -2,15 +2,16 @@ interface LevelConfigs {
   id: string;
   help: string;
   title: string;
-  markup: TagsHTML[];
+  markup: GameHTMLTag[];
 }
 
-type TagsHTML = {
+type GameHTMLTag = {
   tagName: string;
   className?: string;
   idName?: string;
-  children?: TagsHTML[];
-  hash?: string;
+  children?: GameHTMLTag[];
+  signElement?: string;
+  winCondition?: boolean;
 };
 
 const LevelData: LevelConfigs[] = [
@@ -20,15 +21,16 @@ const LevelData: LevelConfigs[] = [
     title: 'level 1',
     markup: [
       {
-        tagName: 'apple',
+        tagName: 'plate',
         className: 'small',
       },
       {
-        tagName: 'apple',
+        tagName: 'plate',
         idName: 'Ya!',
+        winCondition: true,
       },
       {
-        tagName: 'apple',
+        tagName: 'plate',
       },
     ],
   },
@@ -38,23 +40,24 @@ const LevelData: LevelConfigs[] = [
     title: 'level 2',
     markup: [
       {
-        tagName: 'apple',
+        tagName: 'plate',
         children: [
           {
             tagName: 'apple',
             className: 'big',
+            winCondition: true,
           },
         ],
       },
       {
-        tagName: 'apple',
+        tagName: 'plate',
       },
       {
-        tagName: 'apple',
+        tagName: 'plate',
         idName: 'dddd!',
       },
     ],
   },
 ];
 
-export { LevelConfigs, LevelData, TagsHTML };
+export { LevelConfigs, LevelData, GameHTMLTag };

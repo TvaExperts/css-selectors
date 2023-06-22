@@ -1,4 +1,4 @@
-.game__code {
+.code-viewer {
   width: 750px;
   height: 250px;
   background: darkslategray;
@@ -8,11 +8,11 @@
   cursor: default;
 }
 
-.game__code div {
+.code-viewer div {
   padding-left: 25px;
 }
 
-.select-line,
-.select-line span {
+.code-viewer .select-line,
+.code-viewer .select-line span {
   color: red;
 }

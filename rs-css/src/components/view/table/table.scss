@@ -23,3 +23,33 @@ plate {
   background-color: aqua;
   position: relative;
 }
+
+plate * {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  transform: scale(0.5);
+}
+
+.game__table .selected-element {
+  box-shadow: 0 0 10px #000;
+}
+
+@keyframes pulsing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+.game__table .win-condition-animation {
+  animation: pulsing 1s infinite;
+}

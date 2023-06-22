@@ -22,8 +22,8 @@ export default class Controller {
     this.view.setHoverElementCallback(this.showTargetElement.bind(this));
   }
 
-  private showTargetElement(hash: string): void {
-    this.view.showTargetElement(hash);
+  private showTargetElement(signElement: string): void {
+    this.view.showTargetElement(signElement);
   }
 
   private loadLevel(levelId: string): void {

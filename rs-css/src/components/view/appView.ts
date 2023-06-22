@@ -2,18 +2,18 @@ import './appView.scss';
 import LevelListView from './level-list/level-list';
 import { CssClasses, TextHTML, LinkHTML } from './types';
 import ElementCreator from '../util/element-creator';
-import CodeView from './code/code-view';
 import TableView from './table/table-view';
 import Level from '../controller/types';
+import CodeViewerView from './code-viewer/code-viewer-view';
 
 export default class AppView {
   public levelListView: LevelListView;
-  private codeView: CodeView;
+  private codeView: CodeViewerView;
   private tableView: TableView;
 
   constructor() {
     this.levelListView = new LevelListView();
-    this.codeView = new CodeView();
+    this.codeView = new CodeViewerView();
     this.tableView = new TableView();
     document.body.append(this.createHeader().getElement());
     document.body.append(this.createMain().getElement());
@@ -29,14 +29,14 @@ export default class AppView {
     this.levelListView.setClickCallback(callback);
   }
 
-  public setHoverElementCallback(callback: (hash: string) => void) {
+  public setHoverElementCallback(callback: (signElement: string) => void) {
     this.codeView.setListeners(callback);
     this.tableView.setListeners(callback);
   }
 
-  public showTargetElement(hash: string): void {
-    this.codeView.showSelectedItem(hash);
-    // this.tableView.
+  public showTargetElement(signElement: string): void {
+    this.codeView.showSelectedItem(signElement);
+    this.tableView.showHoveredElement(signElement);
   }
 
   public setNewLevel(level: Level): void {

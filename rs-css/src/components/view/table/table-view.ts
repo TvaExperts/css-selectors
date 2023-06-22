@@ -1,13 +1,14 @@
 import './table.scss';
 import { ViewParams } from '../types';
 import View from '../view';
-import { TagsHTML } from '../../../data/levels';
+import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
 import CssClasses from './types';
 
 export default class TableView extends View {
   elements: Map<string, HTMLElement>;
+
   constructor() {
     const params: ViewParams = {
       tag: 'div',
@@ -17,13 +18,13 @@ export default class TableView extends View {
     this.elements = new Map<string, HTMLElement>();
   }
 
-  public setListeners(callback: (hash: string) => void) {
+  public setListeners(callback: (sign: string) => void) {
     this.getHtmlElement().addEventListener('mouseover', (e) => {
       const { target }: { target: EventTarget | null } = e;
       if (!target || !(target instanceof Element)) return;
-      const hoverDivHash: string | null = target.getAttribute('hash');
-      if (hoverDivHash) {
-        callback(hoverDivHash);
+      const hoverDivSign: string | null = target.getAttribute('sign');
+      if (hoverDivSign) {
+        callback(hoverDivSign);
       } else {
         callback('');
       }
@@ -31,26 +32,39 @@ export default class TableView extends View {
     this.getHtmlElement().addEventListener('mouseleave', () => callback(''));
   }
 
-  public setNewTable(markup: TagsHTML[]) {
-    this.viewElementCreator.removeInnerElements();
-    markup.forEach((tag) => this.viewElementCreator.addInnerElement(this.buildHTMLTable(tag)));
+  private removeSelection(): void {
+    this.elements.forEach((element: HTMLElement) => {
+      element.classList.remove(CssClasses.SELECTED_ELEMENT);
+    });
   }
 
-  private buildHTMLTable(markup: TagsHTML): HTMLElement {
+  public showHoveredElement(signElement: string): void {
+    this.removeSelection();
+    const element: HTMLElement | undefined = this.elements.get(signElement);
+    if (element) element.classList.add(CssClasses.SELECTED_ELEMENT);
+  }
+
+  public setNewTable(markup: GameHTMLTag[]) {
+    this.viewElementCreator.removeInnerElements();
+    markup.forEach((tag) => this.viewElementCreator.addInnerElement(this.buildTable(tag)));
+  }
+
+  private buildTable(markup: GameHTMLTag): HTMLElement {
     const params: ElementParams = {
       tag: markup.tagName,
       classNames: markup.className ? [markup.className] : [],
       textContent: '',
     };
     const result: ElementCreator = new ElementCreator(params);
-    if (markup.hash) {
-      result.setAttribute('hash', markup.hash);
-      this.elements.set(markup.hash, result.getElement());
+    if (markup.signElement) {
+      result.setAttribute('sign', markup.signElement);
+      this.elements.set(markup.signElement, result.getElement());
     }
+    if (markup.winCondition) result.addCssClasses([CssClasses.WIN_CONDITION_ANIMATION]);
     if (markup.children && markup.children.length) {
-      markup.children.forEach((child: TagsHTML) => {
-        const el: HTMLElement = this.buildHTMLTable(child);
-        if (child.hash) this.elements?.set(child.hash, el);
+      markup.children.forEach((child: GameHTMLTag) => {
+        const el: HTMLElement = this.buildTable(child);
+        if (child.signElement) this.elements?.set(child.signElement, el);
         result.addInnerElement(el);
       });
     }

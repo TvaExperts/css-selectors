@@ -9,4 +9,6 @@ enum TextHTML {
   FILE_PATH = 'table.html',
 }
 
-export { CssClasses, TextHTML };
+const ATTRIBUTE_SIGN_NAME = 'data-sign';
+
+export { CssClasses, TextHTML, ATTRIBUTE_SIGN_NAME };

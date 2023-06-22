@@ -12,7 +12,7 @@ import View from '../view';
 import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
-import { CssClasses } from './types';
+import { CssClasses, ATTRIBUTE_SIGN_NAME } from './types';
 
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 
@@ -28,16 +28,16 @@ export default class CodeViewerView extends View {
     this.elements = new Map<string, HTMLElement>();
   }
 
-  public setListeners(callback: (hash: string) => void) {
+  public setHoverListeners(callback: (signElement: string) => void) {
     this.getHtmlElement().addEventListener('mouseover', (e) => {
       let { target }: { target: EventTarget | null } = e;
 
       while (target !== this.getHtmlElement()) {
         if (!target || !(target instanceof Element)) return;
         if (target.tagName === 'DIV') {
-          const hoverDivHash: string | null = target.getAttribute('sign');
-          if (hoverDivHash) {
-            callback(hoverDivHash);
+          const hoverDivSign: string | null = target.getAttribute(ATTRIBUTE_SIGN_NAME);
+          if (hoverDivSign) {
+            callback(hoverDivSign);
           } else {
             callback('');
           }
@@ -65,12 +65,12 @@ export default class CodeViewerView extends View {
     });
   }
 
-  public showSelectedItem(hash: string = ''): void {
+  public showSelectedItem(signElement: string = ''): void {
     this.removeSelection();
-    if (!hash) return;
-    const elemetn = this.elements.get(hash);
-    if (!elemetn) return;
-    const nodes = elemetn.children;
+    if (!signElement) return;
+    const element = this.elements.get(signElement);
+    if (!element) return;
+    const nodes = element.children;
     for (let i = 0; i < nodes.length; i += 1) {
       if (nodes[i].tagName === 'SPAN') {
         nodes[i].classList.add(CssClasses.SELECTED_LINE);
@@ -102,14 +102,14 @@ export default class CodeViewerView extends View {
       textContent: '',
     };
     const result: ElementCreator = new ElementCreator(params);
-    if (markup.signElement) result.setAttribute('sign', markup.signElement);
+    if (markup.signElement) result.setAttribute(ATTRIBUTE_SIGN_NAME, markup.signElement);
     if (markup.children && markup.children.length) {
       result.getElement().innerHTML = this.getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
 
       markup.children.forEach((child: GameHTMLTag) => {
-        const el: HTMLElement = this.createHTMLTags(child);
-        if (child.signElement) this.elements?.set(child.signElement, el);
-        result.addInnerElement(el);
+        const element: HTMLElement = this.createHTMLTags(child);
+        if (child.signElement) this.elements?.set(child.signElement, element);
+        result.addInnerElement(element);
       });
       result.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags(`</${markup.tagName}>`));
     } else {

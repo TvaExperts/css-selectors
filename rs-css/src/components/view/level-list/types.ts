@@ -4,4 +4,6 @@ enum CssClasses {
   LIST_SELECTED = 'level-selected',
 }
 
-export default CssClasses;
+const ATTRIBUTE_LEVEL_ID = 'data-LevelId';
+
+export { CssClasses, ATTRIBUTE_LEVEL_ID };

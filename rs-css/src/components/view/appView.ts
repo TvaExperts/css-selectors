@@ -5,20 +5,23 @@ import ElementCreator from '../util/element-creator';
 import TableView from './table/table-view';
 import Level from '../controller/types';
 import CodeViewerView from './code-viewer/code-viewer-view';
+import CssInputView from './css-input/css-input-view';
 
 export default class AppView {
-  public levelListView: LevelListView;
+  private levelListView: LevelListView;
   private codeView: CodeViewerView;
   private tableView: TableView;
+  private cssInput: CssInputView;
 
   constructor() {
     this.levelListView = new LevelListView();
     this.codeView = new CodeViewerView();
     this.tableView = new TableView();
-    document.body.append(this.createHeader().getElement());
-    document.body.append(this.createMain().getElement());
-    document.body.append(this.createAside().getElement());
-    document.body.append(this.createFooter().getElement());
+    this.cssInput = new CssInputView();
+    this.buildHeader();
+    this.buildMain();
+    this.buildAside();
+    this.buildFooter();
   }
 
   public addLevels(levels: Level[]): void {
@@ -30,8 +33,8 @@ export default class AppView {
   }
 
   public setHoverElementCallback(callback: (signElement: string) => void) {
-    this.codeView.setListeners(callback);
-    this.tableView.setListeners(callback);
+    this.codeView.setHoverListeners(callback);
+    this.tableView.setHoverListeners(callback);
   }
 
   public showTargetElement(signElement: string): void {
@@ -45,7 +48,7 @@ export default class AppView {
     this.tableView.setNewTable(level.markup);
   }
 
-  private createHeader(): ElementCreator {
+  private buildHeader(): void {
     const headerElementCreator: ElementCreator = new ElementCreator({
       tag: 'header',
       classNames: [CssClasses.HEADER],
@@ -58,21 +61,28 @@ export default class AppView {
     });
     helpElementCreator.setAttribute('href', '#!');
     headerElementCreator.addInnerElement(helpElementCreator.getElement());
-    return headerElementCreator;
+    document.body.append(headerElementCreator.getElement());
   }
 
-  private createMain(): ElementCreator {
+  private buildMain(): void {
     const mainElementCreator: ElementCreator = new ElementCreator({
       tag: 'main',
       classNames: [CssClasses.MAIN],
       textContent: '',
     });
     mainElementCreator.addInnerElement(this.tableView.getHtmlElement());
-    mainElementCreator.addInnerElement(this.codeView.getHtmlElement());
-    return mainElementCreator;
+    const codeBlockElementCreator: ElementCreator = new ElementCreator({
+      tag: 'div',
+      classNames: [CssClasses.MAIN_CODE],
+      textContent: '',
+    });
+    codeBlockElementCreator.addInnerElement(this.cssInput.getHtmlElement());
+    codeBlockElementCreator.addInnerElement(this.codeView.getHtmlElement());
+    mainElementCreator.addInnerElement(codeBlockElementCreator.getElement());
+    document.body.append(mainElementCreator.getElement());
   }
 
-  private createAside(): ElementCreator {
+  private buildAside(): void {
     const asideElementCreator: ElementCreator = new ElementCreator({
       tag: 'aside',
       classNames: [CssClasses.ASIDE],
@@ -85,10 +95,10 @@ export default class AppView {
     });
     asideElementCreator.addInnerElement(titleElementCreator.getElement());
     asideElementCreator.addInnerElement(this.levelListView.getHtmlElement());
-    return asideElementCreator;
+    document.body.append(asideElementCreator.getElement());
   }
 
-  private createFooter(): ElementCreator {
+  private buildFooter(): void {
     const footerElementCreator: ElementCreator = new ElementCreator({
       tag: 'header',
       classNames: [CssClasses.HEADER],
@@ -114,6 +124,6 @@ export default class AppView {
     footerElementCreator.addInnerElement(gitElementCreator.getElement());
     footerElementCreator.addInnerElement(yearElementCreator.getElement());
     footerElementCreator.addInnerElement(schoolElementCreator.getElement());
-    return footerElementCreator;
+    document.body.append(footerElementCreator.getElement());
   }
 }

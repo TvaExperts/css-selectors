@@ -1,5 +1,5 @@
 enum CssClasses {
-  TABLE = 'game__table',
+  TABLE = 'table',
   SELECTED_ELEMENT = 'selected-element',
   WIN_CONDITION_ANIMATION = 'win-condition-animation',
 }

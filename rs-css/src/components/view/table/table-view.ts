@@ -18,7 +18,7 @@ export default class TableView extends View {
     this.elements = new Map<string, HTMLElement>();
   }
 
-  public setListeners(callback: (sign: string) => void) {
+  public setHoverListeners(callback: (sign: string) => void) {
     this.getHtmlElement().addEventListener('mouseover', (e) => {
       const { target }: { target: EventTarget | null } = e;
       if (!target || !(target instanceof Element)) return;
@@ -30,12 +30,6 @@ export default class TableView extends View {
       }
     });
     this.getHtmlElement().addEventListener('mouseleave', () => callback(''));
-  }
-
-  private removeSelection(): void {
-    this.elements.forEach((element: HTMLElement) => {
-      element.classList.remove(CssClasses.SELECTED_ELEMENT);
-    });
   }
 
   public showHoveredElement(signElement: string): void {
@@ -69,5 +63,11 @@ export default class TableView extends View {
       });
     }
     return result.getElement();
+  }
+
+  private removeSelection(): void {
+    this.elements.forEach((element: HTMLElement) => {
+      element.classList.remove(CssClasses.SELECTED_ELEMENT);
+    });
   }
 }

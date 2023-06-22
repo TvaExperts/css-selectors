@@ -1,11 +1,11 @@
-.game__table {
+.table {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 20px;
   align-items: center;
-
-  width: 750px;
-  height: 250px;
+  padding: 20px;
   background: yellowgreen;
+  margin-bottom: 20px;
 }
 
 apple {
@@ -31,7 +31,7 @@ plate * {
   transform: scale(0.5);
 }
 
-.game__table .selected-element {
+.table .selected-element {
   box-shadow: 0 0 10px #000;
 }
 
@@ -50,6 +50,6 @@ plate * {
   }
 }
 
-.game__table .win-condition-animation {
+.table .win-condition-animation {
   animation: pulsing 1s infinite;
 }

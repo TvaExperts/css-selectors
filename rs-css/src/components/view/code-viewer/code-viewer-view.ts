@@ -1,20 +1,12 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable global-require */
-/* eslint-disable import/no-extraneous-dependencies */
-import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/qtcreator-dark.css';
-
 import './code.scss';
 
-// import ElementCreator from '../../../util/element-creator';
 import { ViewParams } from '../types';
 import View from '../view';
 import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
 import { CssClasses, ATTRIBUTE_SIGN_NAME } from './types';
-
-hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
+import { getHighlightedTags } from '../../util/utils';
 
 export default class CodeViewerView extends View {
   elements: Map<string, HTMLElement>;
@@ -85,13 +77,13 @@ export default class CodeViewerView extends View {
       textContent: '',
     };
     const table: ElementCreator = new ElementCreator(params);
-    table.getElement().innerHTML = this.getHighlightedTags('<div class="table">');
+    table.getElement().innerHTML = getHighlightedTags('<div class="table">');
     markup.forEach((tag: GameHTMLTag) => {
       const element: HTMLElement = this.createHTMLTags(tag);
       if (tag.signElement) this.elements?.set(tag.signElement, element);
       table.addInnerElement(element);
     });
-    table.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags('</div>'));
+    table.getElement().insertAdjacentHTML('beforeend', getHighlightedTags('</div>'));
     return table.getElement();
   }
 
@@ -104,16 +96,16 @@ export default class CodeViewerView extends View {
     const result: ElementCreator = new ElementCreator(params);
     if (markup.signElement) result.setAttribute(ATTRIBUTE_SIGN_NAME, markup.signElement);
     if (markup.children && markup.children.length) {
-      result.getElement().innerHTML = this.getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
+      result.getElement().innerHTML = getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
 
       markup.children.forEach((child: GameHTMLTag) => {
         const element: HTMLElement = this.createHTMLTags(child);
         if (child.signElement) this.elements?.set(child.signElement, element);
         result.addInnerElement(element);
       });
-      result.getElement().insertAdjacentHTML('beforeend', this.getHighlightedTags(`</${markup.tagName}>`));
+      result.getElement().insertAdjacentHTML('beforeend', getHighlightedTags(`</${markup.tagName}>`));
     } else {
-      result.getElement().innerHTML = this.getHighlightedTags(`<${this.getTagForHighlight(markup)} />`);
+      result.getElement().innerHTML = getHighlightedTags(`<${this.getTagForHighlight(markup)} />`);
     }
     return result.getElement();
   }
@@ -123,9 +115,5 @@ export default class CodeViewerView extends View {
     if (markup.className) result += ` class="${markup.className}"`;
     if (markup.idName) result += ` id="${markup.idName}"`;
     return result;
-  }
-
-  private getHighlightedTags(str: string): string {
-    return hljs.highlight(str, { language: 'xml' }).value;
   }
 }

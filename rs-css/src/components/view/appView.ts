@@ -5,19 +5,19 @@ import ElementCreator from '../util/element-creator';
 import TableView from './table/table-view';
 import Level from '../controller/types';
 import CodeViewerView from './code-viewer/code-viewer-view';
-import CssInputView from './css-input/css-input-view';
+import CssSelectorView from './css-selector/css-selector-view';
 
 export default class AppView {
   private levelListView: LevelListView;
   private codeView: CodeViewerView;
   private tableView: TableView;
-  private cssInput: CssInputView;
+  private cssInput: CssSelectorView;
 
   constructor() {
     this.levelListView = new LevelListView();
     this.codeView = new CodeViewerView();
     this.tableView = new TableView();
-    this.cssInput = new CssInputView();
+    this.cssInput = new CssSelectorView();
     this.buildHeader();
     this.buildMain();
     this.buildAside();

@@ -1,6 +1,6 @@
 import { LevelConfigs, LevelData, GameHTMLTag } from '../../data/levels';
 import Level from './types';
-import getRandomStr from '../util/utils';
+import { getRandomStr } from '../util/utils';
 
 const SIGN_LENGTH: number = 8;
 

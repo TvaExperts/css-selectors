@@ -1,14 +1,12 @@
 enum CssClasses {
   CODE_VIEWER = 'code-viewer',
   CODE = 'code-viewer__code',
+  LINE_NUMBERS = 'code-viewer__line-numbers',
   SELECTED_LINE = 'select-line',
 }
 
-enum TextHTML {
-  TITLE = 'HTML Viewer',
-  FILE_PATH = 'table.html',
-}
+const ATTRIBUTE_SIGN_NAME: string = 'data-sign';
 
-const ATTRIBUTE_SIGN_NAME = 'data-sign';
+const LINES_COUNT: number = 15;
 
-export { CssClasses, TextHTML, ATTRIBUTE_SIGN_NAME };
+export { CssClasses, ATTRIBUTE_SIGN_NAME, LINES_COUNT };

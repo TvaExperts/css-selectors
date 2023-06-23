@@ -5,11 +5,12 @@ import View from '../view';
 import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
-import { CssClasses, ATTRIBUTE_SIGN_NAME } from './types';
+import { CssClasses, ATTRIBUTE_SIGN_NAME, LINES_COUNT } from './types';
 import { getHighlightedTags } from '../../util/utils';
 
 export default class CodeViewerView extends View {
   elements: Map<string, HTMLElement>;
+  codeBlock: ElementCreator;
 
   constructor() {
     const params: ViewParams = {
@@ -18,6 +19,27 @@ export default class CodeViewerView extends View {
     };
     super(params);
     this.elements = new Map<string, HTMLElement>();
+    const lineNumbers = new ElementCreator({
+      tag: 'div',
+      classNames: [CssClasses.LINE_NUMBERS],
+      textContent: '',
+    });
+    lineNumbers.getElement().innerHTML = this.generateLineNumbersText();
+    this.codeBlock = new ElementCreator({
+      tag: 'div',
+      classNames: [CssClasses.CODE],
+      textContent: '',
+    });
+    this.viewElementCreator.addInnerElement(lineNumbers);
+    this.viewElementCreator.addInnerElement(this.codeBlock);
+  }
+
+  private generateLineNumbersText(): string {
+    const numbers: string[] = [];
+    for (let i = 1; i <= LINES_COUNT; i += 1) {
+      numbers.push(i.toString());
+    }
+    return numbers.join('<br>');
   }
 
   public setHoverListeners(callback: (signElement: string) => void) {
@@ -42,8 +64,8 @@ export default class CodeViewerView extends View {
   }
 
   public setNewCode(markup: GameHTMLTag[]) {
-    this.viewElementCreator.removeInnerElements();
-    this.viewElementCreator.addInnerElement(this.buildHTMLCode(markup));
+    this.codeBlock.removeInnerElements();
+    this.codeBlock.addInnerElement(this.buildHTMLCode(markup));
   }
 
   private removeSelection(): void {

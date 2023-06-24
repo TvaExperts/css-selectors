@@ -18,13 +18,16 @@ export default class CodeViewerView extends View {
       classNames: [CssClasses.CODE_VIEWER],
     };
     super(params);
+
     this.elements = new Map<string, HTMLElement>();
+
     const lineNumbers = new ElementCreator({
       tag: 'div',
       classNames: [CssClasses.LINE_NUMBERS],
       textContent: '',
     });
     lineNumbers.getElement().innerHTML = this.generateLineNumbersText();
+
     this.codeBlock = new ElementCreator({
       tag: 'div',
       classNames: [CssClasses.CODE],
@@ -45,13 +48,12 @@ export default class CodeViewerView extends View {
   public setHoverListeners(callback: (signElement: string) => void) {
     this.getHtmlElement().addEventListener('mouseover', (e) => {
       let { target }: { target: EventTarget | null } = e;
-
       while (target !== this.getHtmlElement()) {
         if (!target || !(target instanceof Element)) return;
-        if (target.tagName === 'DIV') {
-          const hoverDivSign: string | null = target.getAttribute(ATTRIBUTE_SIGN_NAME);
-          if (hoverDivSign) {
-            callback(hoverDivSign);
+        if (target.tagName !== 'SPAN') {
+          const hoverSign: string | null = target.getAttribute(ATTRIBUTE_SIGN_NAME);
+          if (hoverSign) {
+            callback(hoverSign);
           } else {
             callback('');
           }
@@ -65,7 +67,17 @@ export default class CodeViewerView extends View {
 
   public setNewCode(markup: GameHTMLTag[]) {
     this.codeBlock.removeInnerElements();
-    this.codeBlock.addInnerElement(this.buildHTMLCode(markup));
+    this.buildHTMLCode(markup);
+  }
+
+  public getSignsElementBySelector(selector: string): string[] {
+    const nodeList: NodeListOf<Element> = this.codeBlock.getElement().querySelectorAll(selector);
+    const signsArr: string[] = [];
+    nodeList.forEach((node: Element) => {
+      const signElement: string | null = node.getAttribute(ATTRIBUTE_SIGN_NAME);
+      if (signElement) signsArr.push(signElement);
+    });
+    return signsArr;
   }
 
   private removeSelection(): void {
@@ -92,27 +104,20 @@ export default class CodeViewerView extends View {
     }
   }
 
-  private buildHTMLCode(markup: GameHTMLTag[]): HTMLElement {
-    const params: ElementParams = {
-      tag: 'div',
-      classNames: [],
-      textContent: '',
-    };
-    const table: ElementCreator = new ElementCreator(params);
-    table.getElement().innerHTML = getHighlightedTags('<div class="table">');
+  private buildHTMLCode(markup: GameHTMLTag[]): void {
+    this.codeBlock.getElement().innerHTML = getHighlightedTags('<div class="table">');
     markup.forEach((tag: GameHTMLTag) => {
       const element: HTMLElement = this.createHTMLTags(tag);
       if (tag.signElement) this.elements?.set(tag.signElement, element);
-      table.addInnerElement(element);
+      this.codeBlock.addInnerElement(element);
     });
-    table.getElement().insertAdjacentHTML('beforeend', getHighlightedTags('</div>'));
-    return table.getElement();
+    this.codeBlock.getElement().insertAdjacentHTML('beforeend', getHighlightedTags('</div>'));
   }
 
   private createHTMLTags(markup: GameHTMLTag): HTMLElement {
     const params: ElementParams = {
-      tag: 'div',
-      classNames: [],
+      tag: markup.tagName,
+      classNames: markup.className ? [markup.className] : [],
       textContent: '',
     };
     const result: ElementCreator = new ElementCreator(params);

@@ -6,9 +6,9 @@ import ElementCreator from '../../util/element-creator';
 import { getHighlightedCss } from '../../util/utils';
 
 export default class CssSelectorView extends View {
-  buttonEnter: ElementCreator;
-  input: HTMLInputElement;
-  visibleInput: ElementCreator;
+  private buttonEnter: ElementCreator;
+  private input: HTMLInputElement;
+  private visibleInput: ElementCreator;
 
   constructor() {
     const params: ViewParams = {
@@ -22,6 +22,7 @@ export default class CssSelectorView extends View {
       classNames: [CssClasses.BUTTON_ENTER],
       textContent: TextHTML.BUTTON_ENTER,
     });
+
     this.visibleInput = new ElementCreator({
       tag: 'div',
       classNames: [CssClasses.VISIBLE_INPUT],
@@ -29,10 +30,23 @@ export default class CssSelectorView extends View {
     });
 
     this.input = this.createInput([CssClasses.INPUT]);
-
     this.viewElementCreator.addInnerElement(this.buttonEnter);
     this.viewElementCreator.addInnerElement(this.visibleInput);
     this.viewElementCreator.addInnerElement(this.input);
+  }
+
+  public setCheckCssCallback(callback: (selector: string) => void): void {
+    this.input.addEventListener('keydown', (e: Event) => this.checkCssSelector(callback, e));
+    this.buttonEnter.getElement().addEventListener('click', () => this.checkCssSelector(callback));
+  }
+
+  public clearInput(): void {
+    this.input.value = '';
+    this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
+  }
+
+  private returnPlaceHolderInInput(): void {
+    if (!this.input.value) this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
   }
 
   private createInput(classes: string[]): HTMLInputElement {
@@ -44,15 +58,26 @@ export default class CssSelectorView extends View {
     return input;
   }
 
-  private returnPlaceHolderInInput(): void {
-    if (!this.input.value) this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
-  }
-
   private removePlaceHolderWhenFocus(): void {
     if (!this.input.value) this.visibleInput.setTextContent('');
   }
 
   private changeInputText(): void {
+    this.input.value = this.thimCustomSpaces(this.input.value);
     this.visibleInput.getElement().innerHTML = getHighlightedCss(this.input.value);
+  }
+
+  private thimCustomSpaces(str: string): string {
+    let result: string = str.trimStart();
+    if (result.endsWith('  ')) result = `${result.trimEnd()} `;
+    return result;
+  }
+
+  private checkCssSelector(callback: (selector: string) => void, e?: Event): void {
+    if (e && e instanceof KeyboardEvent && e.key !== 'Enter') {
+      return;
+    }
+    const cssSelector: string = this.input.value.trim();
+    callback(cssSelector);
   }
 }

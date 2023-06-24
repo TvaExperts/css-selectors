@@ -1,34 +1,38 @@
 import { LevelConfigs, LevelData, GameHTMLTag } from '../../data/levels';
-import Level from './types';
+import { Level, SIGN_LENGTH } from './types';
 import { getRandomStr } from '../util/utils';
 
-const SIGN_LENGTH: number = 8;
-
 export default class Model {
+  private curLevel: Level;
   public levels: Level[];
-  public currentLevel: Level | null;
 
   constructor() {
     this.levels = [];
-    this.currentLevel = null;
-
     this.initLevelsData();
+    [this.curLevel] = this.levels;
   }
 
-  public getCurrentLevel(): Level | null {
-    return this.currentLevel;
+  get getLevelCount(): number {
+    return this.levels.length;
   }
 
-  public setCurrentLevel(levelId: string): void {
+  get currentLevel(): Level {
+    return this.curLevel;
+  }
+
+  public setCurrentLevel(levelId: number): void {
     const newLevel: Level | undefined = this.levels.find((level) => level.id === levelId);
-    if (newLevel && newLevel !== this.currentLevel) this.currentLevel = newLevel;
+    if (newLevel && newLevel !== this.curLevel) this.curLevel = newLevel;
   }
 
   private initLevelsData(): void {
     LevelData.forEach((levelConfigs: LevelConfigs) => {
-      const level: Level = levelConfigs;
-      level.signs = [];
-      level.winSigns = [];
+      const level: Level = {
+        ...levelConfigs,
+        signs: [],
+        winSigns: [],
+        id: this.levels.length + 1,
+      };
       level.markup = this.getMarkupWithSigns(level.markup, level);
       this.levels.push(level);
     });

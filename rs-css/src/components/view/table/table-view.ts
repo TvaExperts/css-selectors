@@ -43,6 +43,16 @@ export default class TableView extends View {
     markup.forEach((tag) => this.viewElementCreator.addInnerElement(this.buildTable(tag)));
   }
 
+  public shakeTableElements(signsElements: string[]): void {
+    signsElements.forEach((sign: string) => {
+      const element: HTMLElement | undefined = this.elements.get(sign);
+      element?.classList.add(CssClasses.ANIMATION_SHAKE);
+      setTimeout(() => {
+        element?.classList.remove(CssClasses.ANIMATION_SHAKE);
+      }, 500);
+    });
+  }
+
   private buildTable(markup: GameHTMLTag): HTMLElement {
     const params: ElementParams = {
       tag: markup.tagName,
@@ -54,7 +64,7 @@ export default class TableView extends View {
       result.setAttribute('sign', markup.signElement);
       this.elements.set(markup.signElement, result.getElement());
     }
-    if (markup.winCondition) result.addCssClasses([CssClasses.WIN_CONDITION_ANIMATION]);
+    if (markup.winCondition) result.addCssClasses([CssClasses.ANIMATION_WIN_CONDITION]);
     if (markup.children && markup.children.length) {
       markup.children.forEach((child: GameHTMLTag) => {
         const el: HTMLElement = this.buildTable(child);

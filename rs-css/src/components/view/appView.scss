@@ -20,9 +20,28 @@
   background: darkolivegreen;
 }
 
-.main__code {
+.main__editor {
   width: 80%;
   border: 5px solid gray;
+}
+
+.animation-shake {
+  animation: shake 0.1s 5;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(3px);
+  }
 }
 
 .aside {
@@ -30,7 +49,7 @@
   right: 0;
   width: 400px;
   height: 100%;
-  padding: 5px;
+  padding: 5px 0;
   background-color: brown;
 }
 

@@ -1,8 +1,11 @@
 import { LevelConfigs } from '../../data/levels';
 
 interface Level extends LevelConfigs {
-  signs?: string[];
-  winSigns?: string[];
+  id: number;
+  signs: string[];
+  winSigns: string[];
 }
 
-export default Level;
+const SIGN_LENGTH: number = 8;
+
+export { Level, SIGN_LENGTH };

@@ -1,5 +1,4 @@
 interface LevelConfigs {
-  id: string;
   help: string;
   title: string;
   markup: GameHTMLTag[];
@@ -16,7 +15,6 @@ type GameHTMLTag = {
 
 const LevelData: LevelConfigs[] = [
   {
-    id: '1',
     help: '',
     title: 'level 1',
     markup: [
@@ -35,7 +33,6 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    id: '2',
     help: '',
     title: 'level 2',
     markup: [

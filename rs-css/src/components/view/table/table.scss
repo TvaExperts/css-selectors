@@ -3,36 +3,44 @@
   justify-content: center;
   gap: 20px;
   align-items: center;
+  margin-bottom: 20px;
   padding: 20px;
   background: yellowgreen;
-  margin-bottom: 20px;
-}
 
-apple {
-  display: block;
-  width: 50px;
-  height: 50px;
-  background-color: red;
-  position: relative;
-}
+  apple {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+  }
 
-plate {
-  display: block;
-  width: 100px;
-  height: 100px;
-  background-color: aqua;
-  position: relative;
-}
+  plate {
+    position: relative;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+  }
 
-plate * {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  transform: scale(0.5);
-}
+  plate * {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    transform: scale(0.5);
+  }
 
-.table .selected-element {
-  box-shadow: 0 0 10px #000;
+  & .selected-element {
+    box-shadow: 0 0 10px #000;
+  }
+
+  & .animation-win-condition {
+    animation: pulsing 1s infinite;
+  }
+
+  & .animation-shake {
+    animation: shake 0.1s 5;
+  }
 }
 
 @keyframes pulsing {
@@ -50,6 +58,17 @@ plate * {
   }
 }
 
-.table .win-condition-animation {
-  animation: pulsing 1s infinite;
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(3px);
+  }
 }

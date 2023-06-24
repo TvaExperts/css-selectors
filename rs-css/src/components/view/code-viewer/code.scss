@@ -1,11 +1,8 @@
 .code-viewer {
   display: flex;
   flex-direction: row;
-
   width: 100%;
-
   background: darkslategray;
-
   font-size: 20px;
   font-family: 'Roboto Mono';
   cursor: default;
@@ -14,17 +11,20 @@
 
 .code-viewer__line-numbers {
   width: 40px;
-  text-align: right;
   padding: 7px;
+  text-align: right;
   color: lightblue;
   background-color: darkslateblue;
   border-right: 1px solid darkblue;
 }
 
 .code-viewer__code {
-  padding: 7px 0;
+  padding: 7px;
+  width: 100%;
 
-  & div {
+  apple,
+  plate {
+    display: block;
     padding-left: 25px;
   }
 

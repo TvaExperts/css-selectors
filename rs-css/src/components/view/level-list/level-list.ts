@@ -2,7 +2,7 @@ import './level-list.scss';
 import ElementCreator from '../../util/element-creator';
 import { ViewParams } from '../types';
 import View from '../view';
-import Level from '../../controller/types';
+import { Level } from '../../controller/types';
 import { CssClasses, ATTRIBUTE_LEVEL_ID } from './types';
 
 export default class LevelListView extends View {
@@ -30,22 +30,22 @@ export default class LevelListView extends View {
     });
   }
 
-  public setClickCallback(callback: (levelId: string) => void) {
+  public setClickCallback(callback: (levelId: number) => void) {
     this.getHtmlElement().addEventListener('click', (e) => {
       const { target }: { target: EventTarget | null } = e;
       if (!target || !(target instanceof Element)) return;
-      const clickedLevelId: string | null = target.getAttribute(ATTRIBUTE_LEVEL_ID);
-      if (clickedLevelId) {
-        callback(clickedLevelId);
-      }
+      const stringClickedLevelId: string | null = target.getAttribute(ATTRIBUTE_LEVEL_ID);
+      if (!stringClickedLevelId) return;
+      const levelId: number = parseInt(stringClickedLevelId, 10);
+      callback(levelId);
     });
   }
 
-  public selectLevel(levelId: string): void {
+  public selectLevel(levelId: number): void {
     this.levelItems.forEach((levelItem: ElementCreator) => {
       levelItem.removeCssClass([CssClasses.LIST_SELECTED]);
       const levelItemId: string | null = levelItem.getElement().getAttribute(ATTRIBUTE_LEVEL_ID);
-      if (levelItemId && levelItemId === levelId) {
+      if (levelItemId && levelItemId === levelId.toString()) {
         levelItem.addCssClasses([CssClasses.LIST_SELECTED]);
       }
     });

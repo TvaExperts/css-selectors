@@ -10,7 +10,7 @@ export default class Controller {
     this.model = new Model();
     this.initData();
     this.initCallbacks();
-    this.loadLevel(1);
+    this.loadLevel(this.model.currentLevel.id);
   }
 
   private initData(): void {

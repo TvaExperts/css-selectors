@@ -1,14 +1,15 @@
 import { LevelConfigs, LevelData, GameHTMLTag } from '../../data/levels';
-import { Level, SIGN_LENGTH } from './types';
+import { Level, SIGN_LENGTH, ResolveStatus, StateOfGame, StateOfLevel, LOCAL_STORAGE_PARAM_NAME } from './types';
 
 export default class Model {
-  private curLevel: Level;
+  private currentLevelNumber: number = 1;
   public levels: Level[];
 
   constructor() {
     this.levels = [];
     this.initLevelsData();
-    [this.curLevel] = this.levels;
+    this.loadStateFromStorage();
+    window.addEventListener('beforeunload', () => this.saveStateInStorage());
   }
 
   get getLevelCount(): number {
@@ -16,12 +17,12 @@ export default class Model {
   }
 
   get currentLevel(): Level {
-    return this.curLevel;
+    return this.levels[this.currentLevelNumber - 1];
   }
 
   public setCurrentLevel(levelId: number): void {
     const newLevel: Level | undefined = this.levels.find((level) => level.id === levelId);
-    if (newLevel && newLevel !== this.curLevel) this.curLevel = newLevel;
+    if (newLevel) this.currentLevelNumber = newLevel.id;
   }
 
   private initLevelsData(): void {
@@ -31,6 +32,7 @@ export default class Model {
         signs: [],
         winSigns: [],
         id: this.levels.length + 1,
+        resolveStatus: ResolveStatus.NO,
       };
       level.markup = this.getMarkupWithSigns(level.markup, level);
       this.levels.push(level);
@@ -68,5 +70,34 @@ export default class Model {
     }
 
     return result;
+  }
+
+  private loadStateFromStorage(): void {
+    const loadetData: string | null = localStorage.getItem(LOCAL_STORAGE_PARAM_NAME);
+    if (!loadetData) {
+      this.currentLevelNumber = 1;
+      return;
+    }
+
+    const loadedState: StateOfGame = JSON.parse(loadetData);
+    this.currentLevelNumber = loadedState.curLevel;
+  }
+
+  private saveStateInStorage(): void {
+    const levelsState: StateOfLevel[] = [];
+
+    this.levels.forEach((level: Level) => {
+      const state: StateOfLevel = {
+        id: level.id,
+        resolveStatus: level.resolveStatus,
+      };
+      levelsState.push(state);
+    });
+
+    const dataToSave: StateOfGame = {
+      curLevel: this.currentLevelNumber,
+      levelsState,
+    };
+    localStorage.setItem(LOCAL_STORAGE_PARAM_NAME, JSON.stringify(dataToSave));
   }
 }

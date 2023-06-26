@@ -6,7 +6,7 @@ import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
 import { CssClasses, ATTRIBUTE_SIGN_NAME, LINES_COUNT } from './types';
-import { getHighlightedTags } from '../../util/utils';
+import { getHighlightedTags } from '../../util/highlight-js';
 
 export default class CodeViewerView extends View {
   elements: Map<string, HTMLElement>;

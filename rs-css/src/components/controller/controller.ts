@@ -37,29 +37,36 @@ export default class Controller {
       this.view.shakeEditor();
       return;
     }
+
     if (selector.match(/^\d/gm)) {
       this.handleDigitSelector(selector);
       return;
     }
+
     const selectedSignsElements: string[] = this.view.getSignsElementBySelector(selector);
-    if (!selectedSignsElements || !selectedSignsElements.length) {
+
+    if (!selectedSignsElements.length) {
       this.view.shakeEditor();
       return;
     }
-    const winCondition: string[] = this.model.currentLevel.winSigns;
-    if (selectedSignsElements.length !== winCondition.length) {
-      this.view.shakeTableElements(selectedSignsElements);
-      return;
-    }
-    if (winCondition.every((sign: string) => selectedSignsElements.includes(sign))) {
+
+    const winConditionArraySigns: string[] = this.model.currentLevel.winSigns;
+
+    if (this.isSameArrays(winConditionArraySigns, selectedSignsElements)) {
       console.log('Winner!');
     } else {
       this.view.shakeTableElements(selectedSignsElements);
     }
   }
 
+  private isSameArrays(array1: string[], array2: string[]): boolean {
+    if (array1.length !== array2.length) return false;
+    return array1.every((item: string) => array2.includes(item));
+  }
+
   private handleDigitSelector(selector: string): void {
     const levelNumber: number | undefined = parseInt(selector, 10);
+
     if (!levelNumber || levelNumber <= 0 || levelNumber > this.model.getLevelCount) {
       this.view.shakeEditor();
     } else {

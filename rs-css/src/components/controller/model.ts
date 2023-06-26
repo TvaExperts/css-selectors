@@ -1,6 +1,5 @@
 import { LevelConfigs, LevelData, GameHTMLTag } from '../../data/levels';
 import { Level, SIGN_LENGTH } from './types';
-import { getRandomStr } from '../util/utils';
 
 export default class Model {
   private curLevel: Level;
@@ -45,9 +44,9 @@ export default class Model {
       if (newTag.children && newTag.children.length) {
         newTag.children = this.getMarkupWithSigns(newTag.children, level);
       }
-      let sign: string = getRandomStr(SIGN_LENGTH);
+      let sign: string = this.getRandomStr(SIGN_LENGTH);
       while (level.signs?.includes(sign)) {
-        sign = getRandomStr(SIGN_LENGTH);
+        sign = this.getRandomStr(SIGN_LENGTH);
       }
       level.signs?.push(sign);
       newTag.signElement = sign;
@@ -56,6 +55,18 @@ export default class Model {
       }
       result.push(newTag);
     });
+    return result;
+  }
+
+  private getRandomStr(length: number): string {
+    const chrs: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result: string = '';
+
+    for (let i = 0; i < length; i += 1) {
+      const pos = Math.floor(Math.random() * chrs.length);
+      result += chrs[pos];
+    }
+
     return result;
   }
 }

@@ -3,7 +3,7 @@ import { ViewParams } from '../types';
 import View from '../view';
 import { CssClasses, TextHTML } from './types';
 import ElementCreator from '../../util/element-creator';
-import { getHighlightedCss } from '../../util/utils';
+import { getHighlightedCss } from '../../util/highlight-js';
 
 export default class CssSelectorView extends View {
   private buttonEnter: ElementCreator;

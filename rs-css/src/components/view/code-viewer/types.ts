@@ -5,8 +5,9 @@ enum CssClasses {
   SELECTED_LINE = 'select-line',
 }
 
-const ATTRIBUTE_SIGN_NAME: string = 'data-sign';
+const Constants = {
+  ATTRIBUTE_SIGN_NAME: 'data-sign',
+  LINES_COUNT: 15,
+};
 
-const LINES_COUNT: number = 15;
-
-export { CssClasses, ATTRIBUTE_SIGN_NAME, LINES_COUNT };
+export { CssClasses, Constants };

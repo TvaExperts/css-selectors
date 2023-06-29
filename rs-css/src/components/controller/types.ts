@@ -23,7 +23,9 @@ type StateOfGame = {
   levelsState: StateOfLevel[];
 };
 
-const SIGN_LENGTH: number = 8;
-const LOCAL_STORAGE_PARAM_NAME = 'tva-rs-css';
+const Constants = {
+  LOCAL_STORAGE_PARAM_NAME: 'tva-rs-css',
+  SIGN_LENGTH: 8,
+};
 
-export { Level, ResolveStatus, SIGN_LENGTH, StateOfGame, StateOfLevel, LOCAL_STORAGE_PARAM_NAME };
+export { Level, ResolveStatus, StateOfGame, StateOfLevel, Constants };

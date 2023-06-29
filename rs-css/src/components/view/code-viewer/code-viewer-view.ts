@@ -5,7 +5,7 @@ import View from '../view';
 import { GameHTMLTag } from '../../../data/levels';
 import ElementParams from '../../util/types';
 import ElementCreator from '../../util/element-creator';
-import { CssClasses, ATTRIBUTE_SIGN_NAME, LINES_COUNT } from './types';
+import { CssClasses, Constants } from './types';
 import { getHighlightedTags } from '../../util/highlight-js';
 
 export default class CodeViewerView extends View {
@@ -39,7 +39,7 @@ export default class CodeViewerView extends View {
 
   private generateLineNumbersText(): string {
     const numbers: string[] = [];
-    for (let i = 1; i <= LINES_COUNT; i += 1) {
+    for (let i = 1; i <= Constants.LINES_COUNT; i += 1) {
       numbers.push(i.toString());
     }
     return numbers.join('<br>');
@@ -51,7 +51,7 @@ export default class CodeViewerView extends View {
       while (target !== this.getHtmlElement()) {
         if (!target || !(target instanceof Element)) return;
         if (target.tagName !== 'SPAN') {
-          const hoverSign: string | null = target.getAttribute(ATTRIBUTE_SIGN_NAME);
+          const hoverSign: string | null = target.getAttribute(Constants.ATTRIBUTE_SIGN_NAME);
           if (hoverSign) {
             callback(hoverSign);
           } else {
@@ -71,10 +71,15 @@ export default class CodeViewerView extends View {
   }
 
   public getSignsElementBySelector(selector: string): string[] {
-    const nodeList: NodeListOf<Element> = this.codeBlock.getElement().querySelectorAll(selector);
+    let nodeList: NodeListOf<Element> | undefined;
+    try {
+      nodeList = this.codeBlock.getElement().querySelectorAll(selector);
+    } catch {
+      return [];
+    }
     const signsArr: string[] = [];
     nodeList.forEach((node: Element) => {
-      const signElement: string | null = node.getAttribute(ATTRIBUTE_SIGN_NAME);
+      const signElement: string | null = node.getAttribute(Constants.ATTRIBUTE_SIGN_NAME);
       if (signElement) signsArr.push(signElement);
     });
     return signsArr;
@@ -108,7 +113,6 @@ export default class CodeViewerView extends View {
     this.codeBlock.getElement().innerHTML = getHighlightedTags('<div class="table">');
     markup.forEach((tag: GameHTMLTag) => {
       const element: HTMLElement = this.createHTMLTags(tag);
-      if (tag.signElement) this.elements?.set(tag.signElement, element);
       this.codeBlock.addInnerElement(element);
     });
     this.codeBlock.getElement().insertAdjacentHTML('beforeend', getHighlightedTags('</div>'));
@@ -121,7 +125,8 @@ export default class CodeViewerView extends View {
       textContent: '',
     };
     const result: ElementCreator = new ElementCreator(params);
-    if (markup.signElement) result.setAttribute(ATTRIBUTE_SIGN_NAME, markup.signElement);
+    if (markup.signElement) result.setAttribute(Constants.ATTRIBUTE_SIGN_NAME, markup.signElement);
+    if (markup.idName) result.setAttribute('id', markup.idName);
     if (markup.children && markup.children.length) {
       result.getElement().innerHTML = getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
 

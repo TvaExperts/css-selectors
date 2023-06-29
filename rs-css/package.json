@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --mode development",
-    "start": "npx webpack serve --mode development"
+    "start": "npx webpack serve --mode development",
+    "deploy": "npm run dev && npx gh-pages -d dist -e rs-css"
   },
   "repository": {
     "type": "git",

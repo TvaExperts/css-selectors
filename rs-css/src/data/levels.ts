@@ -15,7 +15,7 @@ type GameHTMLTag = {
 
 const LevelData: LevelConfigs[] = [
   {
-    hint: '1Системная ошибка: net::ERR_BLOCKED_BY_CLIENT',
+    hint: '#test',
     title: 'level 1',
     markup: [
       {
@@ -24,7 +24,7 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'plate',
-        idName: 'Ya!',
+        idName: 'test',
         winCondition: true,
       },
       {
@@ -33,7 +33,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: '2Waiting for update signal from WDS...',
+    hint: 'apple',
     title: 'level 2',
     markup: [
       {
@@ -56,7 +56,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: '3DevTools failed to load source map: Could not load ',
+    hint: '#test',
     title: 'level 3',
     markup: [
       {
@@ -65,7 +65,7 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'plate',
-        idName: 'Ya!',
+        idName: 'test',
         winCondition: true,
       },
       {
@@ -74,7 +74,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: '4ot Module Replacement enabled,',
+    hint: '#test',
     title: 'level 4',
     markup: [
       {
@@ -83,7 +83,7 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'plate',
-        idName: 'Ya!',
+        idName: 'test',
         winCondition: true,
       },
       {
@@ -92,7 +92,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: '5ot Module Replacement enabled,',
+    hint: '#test',
     title: 'level 5',
     markup: [
       {
@@ -110,7 +110,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: '6ot Module Replacement enabled,',
+    hint: '#test',
     title: 'level 6',
     markup: [
       {
@@ -119,7 +119,7 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'plate',
-        idName: 'Ya',
+        idName: 'test',
         winCondition: true,
       },
       {

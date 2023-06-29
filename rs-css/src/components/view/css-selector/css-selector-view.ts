@@ -3,7 +3,7 @@ import { ViewParams } from '../types';
 import View from '../view';
 import ElementCreator from '../../util/element-creator';
 import { getHighlightedCss } from '../../util/highlight-js';
-import { CssClasses, TextHTML, HINT_STEP_DELAY } from './types';
+import { CssClasses, TextHTML, HINT_ANIMATION_DURATION } from './types';
 
 export default class CssSelectorView extends View {
   private buttonEnter: ElementCreator;
@@ -47,15 +47,20 @@ export default class CssSelectorView extends View {
 
   public showHint(hint: string): void {
     this.input.value = '';
-    const event: Event = new Event('input');
     let index = 0;
+    const event: Event = new Event('input');
+
     const idInterval: NodeJS.Timer = setInterval(() => {
+      index += 1;
       if (index > hint.length) index = hint.length;
       this.input.value = hint.slice(0, index);
       this.input.dispatchEvent(event);
-      index += 1;
-    }, HINT_STEP_DELAY);
-    setTimeout(() => clearInterval(idInterval), hint.length * HINT_STEP_DELAY);
+    }, HINT_ANIMATION_DURATION / hint.length);
+
+    setTimeout(() => {
+      clearInterval(idInterval);
+      this.input.focus();
+    }, HINT_ANIMATION_DURATION);
   }
 
   private returnPlaceHolderInInput(): void {

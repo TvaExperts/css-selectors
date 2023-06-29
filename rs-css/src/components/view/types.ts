@@ -10,8 +10,6 @@ enum CssClasses {
   MAIN_TITLE = 'main__title',
   MAIN_EDITOR = 'main__editor',
   ANIMATION_SHAKE = 'animation-shake',
-  ASIDE = 'aside',
-  ASIDE_TITLE = 'aside__title',
   FOOTER = 'footer',
   FOOTER_GITHUB = 'footer__github',
   FOOTER_YEAR = 'footer__year',

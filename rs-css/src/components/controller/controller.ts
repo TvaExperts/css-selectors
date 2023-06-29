@@ -18,14 +18,20 @@ export default class Controller {
   }
 
   private initCallbacks(): void {
-    this.view.setClickLevelCallback(this.loadLevel.bind(this));
+    this.view.setClickListItemCallback(this.loadLevel.bind(this));
     this.view.setHoverElementCallback(this.showTargetElement.bind(this));
     this.view.setCheckCssCallback(this.checkSelector.bind(this));
     this.view.setHintCallback(this.showHint.bind(this));
+    this.view.setResetProgressCallback(this.resetProgress.bind(this));
+  }
+
+  private resetProgress(): void {
+    this.model.resetProgress();
+    this.view.resetProgress();
   }
 
   private showHint(): void {
-    this.model.setUsedHint();
+    this.model.usedHint = true;
     this.view.showHint(this.model.currentLevel.hint);
   }
 
@@ -59,6 +65,8 @@ export default class Controller {
 
     if (this.isSameArrays(winConditionArraySigns, selectedSignsElements)) {
       this.model.setWinStatusToCurrentLevel();
+      this.view.showWin(this.model.currentLevel);
+
       this.setNextLevel();
     } else {
       this.view.shakeTableElements(selectedSignsElements);
@@ -71,7 +79,7 @@ export default class Controller {
       this.model.setCurrentLevel(nextLevel);
       this.view.setNewLevel(this.model.currentLevel);
     } else {
-      console.log('last level');
+      console.log('last level'); // TODO
     }
   }
 

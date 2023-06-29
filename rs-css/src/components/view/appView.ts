@@ -1,5 +1,5 @@
 import './appView.scss';
-import LevelListView from './level-list/level-list';
+import AsideView from './aside/aside-view';
 import { CssClasses, TextHTML, LinkHTML } from './types';
 import ElementCreator from '../util/element-creator';
 import TableView from './table/table-view';
@@ -8,7 +8,7 @@ import CodeViewerView from './code-viewer/code-viewer-view';
 import CssSelectorView from './css-selector/css-selector-view';
 
 export default class AppView {
-  private levelListView: LevelListView;
+  private asideView: AsideView;
   private codeView: CodeViewerView;
   private tableView: TableView;
   private cssSelectorView: CssSelectorView;
@@ -17,7 +17,7 @@ export default class AppView {
   private mainTitle: ElementCreator;
 
   constructor() {
-    this.levelListView = new LevelListView();
+    this.asideView = new AsideView();
     this.codeView = new CodeViewerView();
     this.tableView = new TableView();
     this.cssSelectorView = new CssSelectorView();
@@ -42,16 +42,24 @@ export default class AppView {
 
     this.buildHeader();
     this.buildMain();
-    this.buildAside();
+    document.body.append(this.asideView.getHtmlElement());
     this.buildFooter();
   }
 
   public addLevels(levels: Level[]): void {
-    this.levelListView.createLevelsList(levels);
+    this.asideView.createLevelsList(levels);
   }
 
-  public setClickLevelCallback(callback: (levelId: number) => void) {
-    this.levelListView.setClickCallback(callback);
+  public setResetProgressCallback(callback: () => void): void {
+    this.asideView.setResetProgressCallback(callback);
+  }
+
+  public resetProgress(): void {
+    this.asideView.resetProgress();
+  }
+
+  public setClickListItemCallback(callback: (levelId: number) => void) {
+    this.asideView.setClickListItemCallback(callback);
   }
 
   public setHoverElementCallback(callback: (signElement: string) => void) {
@@ -77,7 +85,7 @@ export default class AppView {
   }
 
   public setNewLevel(level: Level): void {
-    this.levelListView.selectLevel(level.id);
+    this.asideView.selectLevel(level.id);
     this.codeView.setNewCode(level.markup);
     this.tableView.setNewTable(level.markup);
     this.mainTitle.setTextContent(level.title);
@@ -95,6 +103,11 @@ export default class AppView {
 
   public showHint(hint: string): void {
     this.cssSelectorView.showHint(hint);
+  }
+
+  public showWin(level: Level): void {
+    this.asideView.updateCheckmarkStatus(level);
+    console.log('Animate good!');
   }
 
   private buildHeader(): void {
@@ -119,22 +132,6 @@ export default class AppView {
     this.editor.addInnerElement(this.codeView.getHtmlElement());
     mainElementCreator.addInnerElement(this.editor.getElement());
     document.body.append(mainElementCreator.getElement());
-  }
-
-  private buildAside(): void {
-    const asideElementCreator: ElementCreator = new ElementCreator({
-      tag: 'aside',
-      classNames: [CssClasses.ASIDE],
-      textContent: '',
-    });
-    const titleElementCreator: ElementCreator = new ElementCreator({
-      tag: 'p',
-      classNames: [CssClasses.ASIDE_TITLE],
-      textContent: TextHTML.ASIDE_TITLE,
-    });
-    asideElementCreator.addInnerElement(titleElementCreator.getElement());
-    asideElementCreator.addInnerElement(this.levelListView.getHtmlElement());
-    document.body.append(asideElementCreator.getElement());
   }
 
   private buildFooter(): void {

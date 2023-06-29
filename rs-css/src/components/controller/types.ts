@@ -19,7 +19,7 @@ type StateOfLevel = {
 };
 
 type StateOfGame = {
-  curLevel: number;
+  curLevelNumber: number;
   levelsState: StateOfLevel[];
 };
 

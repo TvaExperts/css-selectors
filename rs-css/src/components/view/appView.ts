@@ -13,6 +13,8 @@ export default class AppView {
   private tableView: TableView;
   private cssSelectorView: CssSelectorView;
   private editor: ElementCreator;
+  private helpButton: ElementCreator;
+  private mainTitle: ElementCreator;
 
   constructor() {
     this.levelListView = new LevelListView();
@@ -23,6 +25,18 @@ export default class AppView {
     this.editor = new ElementCreator({
       tag: 'div',
       classNames: [CssClasses.MAIN_EDITOR],
+      textContent: '',
+    });
+
+    this.helpButton = new ElementCreator({
+      tag: 'div',
+      classNames: [CssClasses.MAIN_HELP],
+      textContent: TextHTML.MAIN_HELP,
+    });
+
+    this.mainTitle = new ElementCreator({
+      tag: 'p',
+      classNames: [CssClasses.MAIN_TITLE],
       textContent: '',
     });
 
@@ -49,6 +63,10 @@ export default class AppView {
     this.cssSelectorView.setCheckCssCallback(callback);
   }
 
+  public setHintCallback(callback: () => void): void {
+    this.helpButton.getElement().addEventListener('click', callback);
+  }
+
   public showTargetElement(signElement: string): void {
     this.codeView.showSelectedItem(signElement);
     this.tableView.showHoveredElement(signElement);
@@ -62,6 +80,7 @@ export default class AppView {
     this.levelListView.selectLevel(level.id);
     this.codeView.setNewCode(level.markup);
     this.tableView.setNewTable(level.markup);
+    this.mainTitle.setTextContent(level.title);
     this.cssSelectorView.clearInput();
   }
 
@@ -74,18 +93,16 @@ export default class AppView {
     this.tableView.shakeTableElements(signsElements);
   }
 
+  public showHint(hint: string): void {
+    this.cssSelectorView.showHint(hint);
+  }
+
   private buildHeader(): void {
     const headerElementCreator: ElementCreator = new ElementCreator({
       tag: 'header',
       classNames: [CssClasses.HEADER],
       textContent: '',
     });
-    const helpElementCreator: ElementCreator = new ElementCreator({
-      tag: 'a',
-      classNames: [CssClasses.HEADER_HELP],
-      textContent: TextHTML.HEADER_HELP_BUTTON,
-    });
-    headerElementCreator.addInnerElement(helpElementCreator.getElement());
     document.body.append(headerElementCreator.getElement());
   }
 
@@ -95,6 +112,8 @@ export default class AppView {
       classNames: [CssClasses.MAIN],
       textContent: '',
     });
+    mainElementCreator.addInnerElement(this.mainTitle.getElement());
+    mainElementCreator.addInnerElement(this.helpButton.getElement());
     mainElementCreator.addInnerElement(this.tableView.getHtmlElement());
     this.editor.addInnerElement(this.cssSelectorView.getHtmlElement());
     this.editor.addInnerElement(this.codeView.getHtmlElement());

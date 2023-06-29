@@ -5,8 +5,8 @@ type ViewParams = {
 
 enum CssClasses {
   HEADER = 'header',
-  HEADER_HELP = 'header__help',
   MAIN = 'main',
+  MAIN_HELP = 'main__help',
   MAIN_TITLE = 'main__title',
   MAIN_EDITOR = 'main__editor',
   ANIMATION_SHAKE = 'animation-shake',
@@ -19,7 +19,7 @@ enum CssClasses {
 }
 
 enum TextHTML {
-  HEADER_HELP_BUTTON = 'Help?',
+  MAIN_HELP = 'Help?',
   ASIDE_TITLE = 'Levels',
   FOOTER_YEAR = '2023',
   FOOTER_GIT = 'Git',

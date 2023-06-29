@@ -10,4 +10,6 @@ enum TextHTML {
   BUTTON_ENTER = 'Enter',
 }
 
-export { CssClasses, TextHTML };
+const HINT_STEP_DELAY: number = 21;
+
+export { CssClasses, TextHTML, HINT_STEP_DELAY };

@@ -20,6 +20,15 @@
   background: darkolivegreen;
 }
 
+.main__help {
+  margin: 10px 0;
+  padding: 10px 30px;
+  background-color: darkslategrey;
+  border: 1px dotted black;
+  cursor: pointer;
+  user-select: none;
+}
+
 .main__editor {
   width: 80%;
   border: 5px solid gray;

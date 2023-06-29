@@ -1,9 +1,9 @@
 import './css-selector.scss';
 import { ViewParams } from '../types';
 import View from '../view';
-import { CssClasses, TextHTML } from './types';
 import ElementCreator from '../../util/element-creator';
 import { getHighlightedCss } from '../../util/highlight-js';
+import { CssClasses, TextHTML, HINT_STEP_DELAY } from './types';
 
 export default class CssSelectorView extends View {
   private buttonEnter: ElementCreator;
@@ -43,6 +43,19 @@ export default class CssSelectorView extends View {
   public clearInput(): void {
     this.input.value = '';
     this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
+  }
+
+  public showHint(hint: string): void {
+    this.input.value = '';
+    const event: Event = new Event('input');
+    let index = 0;
+    const idInterval: NodeJS.Timer = setInterval(() => {
+      if (index > hint.length) index = hint.length;
+      this.input.value = hint.slice(0, index);
+      this.input.dispatchEvent(event);
+      index += 1;
+    }, HINT_STEP_DELAY);
+    setTimeout(() => clearInterval(idInterval), hint.length * HINT_STEP_DELAY);
   }
 
   private returnPlaceHolderInInput(): void {

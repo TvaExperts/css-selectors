@@ -21,6 +21,12 @@ export default class Controller {
     this.view.setClickLevelCallback(this.loadLevel.bind(this));
     this.view.setHoverElementCallback(this.showTargetElement.bind(this));
     this.view.setCheckCssCallback(this.checkSelector.bind(this));
+    this.view.setHintCallback(this.showHint.bind(this));
+  }
+
+  private showHint(): void {
+    this.model.setUsedHint();
+    this.view.showHint(this.model.currentLevel.hint);
   }
 
   private loadLevel(levelId: number): void {
@@ -44,7 +50,6 @@ export default class Controller {
     }
 
     const selectedSignsElements: string[] = this.view.getSignsElementBySelector(selector);
-
     if (!selectedSignsElements.length) {
       this.view.shakeEditor();
       return;
@@ -53,9 +58,20 @@ export default class Controller {
     const winConditionArraySigns: string[] = this.model.currentLevel.winSigns;
 
     if (this.isSameArrays(winConditionArraySigns, selectedSignsElements)) {
-      console.log('Winner!');
+      this.model.setWinStatusToCurrentLevel();
+      this.setNextLevel();
     } else {
       this.view.shakeTableElements(selectedSignsElements);
+    }
+  }
+
+  private setNextLevel() {
+    const nextLevel: number = this.model.currentLevel.id + 1;
+    if (nextLevel <= this.model.getLevelCount) {
+      this.model.setCurrentLevel(nextLevel);
+      this.view.setNewLevel(this.model.currentLevel);
+    } else {
+      console.log('last level');
     }
   }
 
@@ -65,8 +81,11 @@ export default class Controller {
   }
 
   private handleDigitSelector(selector: string): void {
+    if (selector.match(/\D/gm)) {
+      this.view.shakeEditor();
+      return;
+    }
     const levelNumber: number | undefined = parseInt(selector, 10);
-
     if (!levelNumber || levelNumber <= 0 || levelNumber > this.model.getLevelCount) {
       this.view.shakeEditor();
     } else {

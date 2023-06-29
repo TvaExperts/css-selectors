@@ -1,5 +1,5 @@
 interface LevelConfigs {
-  help: string;
+  hint: string;
   title: string;
   markup: GameHTMLTag[];
 }
@@ -15,7 +15,7 @@ type GameHTMLTag = {
 
 const LevelData: LevelConfigs[] = [
   {
-    help: '',
+    hint: '1Системная ошибка: net::ERR_BLOCKED_BY_CLIENT',
     title: 'level 1',
     markup: [
       {
@@ -33,7 +33,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    help: '',
+    hint: '2Waiting for update signal from WDS...',
     title: 'level 2',
     markup: [
       {
@@ -56,7 +56,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    help: '',
+    hint: '3DevTools failed to load source map: Could not load ',
     title: 'level 3',
     markup: [
       {
@@ -74,7 +74,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    help: '',
+    hint: '4ot Module Replacement enabled,',
     title: 'level 4',
     markup: [
       {
@@ -92,7 +92,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    help: '',
+    hint: '5ot Module Replacement enabled,',
     title: 'level 5',
     markup: [
       {
@@ -101,7 +101,7 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'plate',
-        idName: 'Ya!',
+        idName: 'test',
         winCondition: true,
       },
       {
@@ -110,7 +110,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    help: '',
+    hint: '6ot Module Replacement enabled,',
     title: 'level 6',
     markup: [
       {
@@ -119,7 +119,7 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'plate',
-        idName: 'Ya!',
+        idName: 'Ya',
         winCondition: true,
       },
       {

@@ -1,15 +1,17 @@
 import { LevelConfigs, LevelData, GameHTMLTag } from '../../data/levels';
-import { Level, SIGN_LENGTH, ResolveStatus, StateOfGame, StateOfLevel, LOCAL_STORAGE_PARAM_NAME } from './types';
+import { Level, ResolveStatus, StateOfGame, StateOfLevel, Constants } from './types';
 
 export default class Model {
   private currentLevelNumber: number = 1;
   public levels: Level[];
+  private usedHint: boolean;
 
   constructor() {
     this.levels = [];
     this.initLevelsData();
     this.loadStateFromStorage();
     window.addEventListener('beforeunload', () => this.saveStateInStorage());
+    this.usedHint = false;
   }
 
   get getLevelCount(): number {
@@ -21,8 +23,22 @@ export default class Model {
   }
 
   public setCurrentLevel(levelId: number): void {
+    if (levelId === this.currentLevelNumber) return;
+
     const newLevel: Level | undefined = this.levels.find((level) => level.id === levelId);
-    if (newLevel) this.currentLevelNumber = newLevel.id;
+    if (newLevel) {
+      this.currentLevelNumber = newLevel.id;
+      this.usedHint = false;
+    }
+  }
+
+  public setUsedHint(): void {
+    this.usedHint = true;
+  }
+
+  public setWinStatusToCurrentLevel(): void {
+    const curLevel = this.currentLevel;
+    curLevel.resolveStatus = this.usedHint ? ResolveStatus.DONE_WITH_HINT : ResolveStatus.DONE;
   }
 
   private initLevelsData(): void {
@@ -46,9 +62,9 @@ export default class Model {
       if (newTag.children && newTag.children.length) {
         newTag.children = this.getMarkupWithSigns(newTag.children, level);
       }
-      let sign: string = this.getRandomStr(SIGN_LENGTH);
+      let sign: string = this.getRandomStr(Constants.SIGN_LENGTH);
       while (level.signs?.includes(sign)) {
-        sign = this.getRandomStr(SIGN_LENGTH);
+        sign = this.getRandomStr(Constants.SIGN_LENGTH);
       }
       level.signs?.push(sign);
       newTag.signElement = sign;
@@ -73,7 +89,7 @@ export default class Model {
   }
 
   private loadStateFromStorage(): void {
-    const loadetData: string | null = localStorage.getItem(LOCAL_STORAGE_PARAM_NAME);
+    const loadetData: string | null = localStorage.getItem(Constants.LOCAL_STORAGE_PARAM_NAME);
     if (!loadetData) {
       this.currentLevelNumber = 1;
       return;
@@ -98,6 +114,6 @@ export default class Model {
       curLevel: this.currentLevelNumber,
       levelsState,
     };
-    localStorage.setItem(LOCAL_STORAGE_PARAM_NAME, JSON.stringify(dataToSave));
+    localStorage.setItem(Constants.LOCAL_STORAGE_PARAM_NAME, JSON.stringify(dataToSave));
   }
 }

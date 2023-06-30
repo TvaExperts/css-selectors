@@ -1,4 +1,19 @@
 .table {
+  // position: relative;
+}
+
+.table__tooltip {
+  position: absolute;
+  z-index: 11;
+  // top: -50px;
+  left: 50px;
+  color: darkblue;
+  background-color: blanchedalmond;
+  box-shadow: 0 0 3px #000;
+}
+
+.table__surface {
+  position: relative;
   display: flex;
   justify-content: center;
   gap: 20px;

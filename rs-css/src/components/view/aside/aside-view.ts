@@ -1,7 +1,6 @@
-import './aside.scss';
 import ElementCreator from '../../util/element-creator';
-import { ViewParams } from '../types';
 import View from '../view';
+import { ViewParams } from '../types';
 import { Level, ResolveStatus } from '../../controller/types';
 import { CssClasses, ATTRIBUTE_LEVEL_ID, TextHTML } from './types';
 

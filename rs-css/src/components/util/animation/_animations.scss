@@ -1,0 +1,58 @@
+.animation-shake {
+  animation: shake 0.1s infinite;
+}
+
+.animation-win-condition {
+  animation: pulsing 1s infinite;
+}
+
+.animation-is-win {
+  animation: bounce-out 1s ease;
+}
+
+@keyframes bounce-out {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+@keyframes pulsing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(3px);
+  }
+}

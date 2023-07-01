@@ -5,8 +5,8 @@
 .table__tooltip {
   position: absolute;
   z-index: 11;
-  // top: -50px;
-  left: 50px;
+  top: 0px;
+  left: 0px;
   color: darkblue;
   background-color: blanchedalmond;
   box-shadow: 0 0 3px #000;
@@ -48,42 +48,5 @@
   & .selected-element {
     box-shadow: 0 0 10px #000;
   }
-
-  & .animation-win-condition {
-    animation: pulsing 1s infinite;
-  }
-
-  & .animation-shake {
-    animation: shake 0.1s 5;
-  }
 }
 
-@keyframes pulsing {
-  0% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-  50% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-  100% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-  }
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-3px);
-  }
-  50% {
-    transform: translateX(0);
-  }
-  75% {
-    transform: translateX(3px);
-  }
-}

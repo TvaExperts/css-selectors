@@ -1,5 +1,6 @@
 import Model from './model';
 import AppView from '../view/appView';
+import { AnimationСonstants } from '../util/animation/types';
 
 export default class Controller {
   private model: Model;
@@ -66,8 +67,7 @@ export default class Controller {
     if (this.isSameArrays(winConditionArraySigns, selectedSignsElements)) {
       this.model.setWinStatusToCurrentLevel();
       this.view.showWin(this.model.currentLevel);
-
-      this.setNextLevel();
+      setTimeout(() => this.setNextLevel(), AnimationСonstants.WIN_DURATION);
     } else {
       this.view.shakeTableElements(selectedSignsElements);
     }

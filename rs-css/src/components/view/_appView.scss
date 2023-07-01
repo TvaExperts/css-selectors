@@ -34,39 +34,6 @@
   border: 5px solid gray;
 }
 
-.animation-shake {
-  animation: shake 0.1s 5;
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-3px);
-  }
-  50% {
-    transform: translateX(0);
-  }
-  75% {
-    transform: translateX(3px);
-  }
-}
-
-.aside {
-  position: fixed;
-  right: 0;
-  width: 400px;
-  height: 100%;
-  padding: 5px 0;
-  background-color: brown;
-}
-
-.aside__title {
-  padding: 10px;
-  text-align: center;
-}
-
 .footer {
   display: flex;
   flex-direction: row;
@@ -81,7 +48,7 @@
 .footer__school {
   width: 100px;
   height: 50px;
-  background-image: url(../../../assets/images/rs_school.png);
+  background-image: url('../assets/images/rs_school.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

@@ -1,0 +1,33 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+html {
+  height: 100%;
+  color: white;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: calc(100vw - 400px);
+  background-color: dimgrey;
+
+  @include media-tablet {
+    width: 100%;
+  }
+}

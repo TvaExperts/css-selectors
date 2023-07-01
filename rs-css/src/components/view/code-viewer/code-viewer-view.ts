@@ -1,5 +1,3 @@
-import './code.scss';
-
 import { ViewParams } from '../types';
 import View from '../view';
 import ElementCreator from '../../util/element-creator';

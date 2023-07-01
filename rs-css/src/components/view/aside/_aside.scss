@@ -1,0 +1,91 @@
+.aside {
+  position: fixed;
+  right: 0;
+  width: 400px;
+  height: 100%;
+  padding: 5px 0;
+  background-color: brown;
+  transition: all 0.3s ease-in;
+
+  @include media-tablet {
+    right: -400px;
+
+    &.open {
+      right: 0px;
+    }
+  }
+}
+
+.aside__title {
+  padding: 10px;
+  text-align: center;
+}
+
+@include media-tablet {
+  .aside__arraw {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 15px;
+    z-index: 10;
+    height: 60px;
+    width: 30px;
+    background-color: brown;
+    background-image: url('../assets/images/arraw-open.png');
+    background-position: 70% 50%;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    border-top-left-radius: 60px;
+    border-bottom-left-radius: 60px;
+    cursor: pointer;
+
+    .open & {
+      background-image: url('../assets/images/arraw-close.png');
+    }
+  }
+}
+
+.level-list {
+  padding: 10px 0;
+  list-style-type: none;
+}
+
+.level-list__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover,
+  &.level-selected {
+    background-color: lightcoral;
+  }
+}
+
+.level-list__item-checkmark {
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url('../assets/images/gray-checkmark.png');
+
+  &.done {
+    background-image: url('../assets/images/green-checkmark.png');
+  }
+
+  &.done-with-hint {
+    background-image: url('../assets/images/yellow-checkmark.png');
+  }
+}
+
+.level-list__reset-button {
+  width: 125px;
+  margin: 0 auto;
+  padding: 10px;
+  color: crimson;
+  text-align: center;
+  background-color: aqua;
+  cursor: pointer;
+}

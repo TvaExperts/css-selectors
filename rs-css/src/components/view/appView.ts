@@ -1,11 +1,11 @@
-import './appView.scss';
-import AsideView from './aside/aside-view';
-import { CssClasses, TextHTML, LinkHTML } from './types';
 import ElementCreator from '../util/element-creator';
+import AsideView from './aside/aside-view';
 import TableView from './table/table-view';
-import { Level } from '../controller/types';
 import CodeViewerView from './code-viewer/code-viewer-view';
 import CssSelectorView from './css-selector/css-selector-view';
+import { Level } from '../controller/types';
+import { CssClasses, TextHTML, LinkHTML } from './types';
+import { AnimationCssClasses, AnimationСonstants } from '../util/animation/types';
 
 export default class AppView {
   private asideView: AsideView;
@@ -93,8 +93,8 @@ export default class AppView {
   }
 
   public shakeEditor(): void {
-    this.editor.addCssClasses([CssClasses.ANIMATION_SHAKE]);
-    setTimeout(() => this.editor.removeCssClass([CssClasses.ANIMATION_SHAKE]), 500);
+    this.editor.addCssClasses([AnimationCssClasses.SHAKE]);
+    setTimeout(() => this.editor.removeCssClass([AnimationCssClasses.SHAKE]), AnimationСonstants.WRONG_DURATION);
   }
 
   public shakeTableElements(signsElements: string[]): void {
@@ -107,7 +107,7 @@ export default class AppView {
 
   public showWin(level: Level): void {
     this.asideView.updateCheckmarkStatus(level);
-    console.log('Animate good!');
+    this.tableView.showWinAnimation();
   }
 
   private buildHeader(): void {

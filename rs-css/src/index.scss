@@ -1,29 +1,10 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+@import './sass/constants';
+@import './sass/mixins';
+@import './sass/base';
+@import './components/util/animation/animations';
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-input {
-  font-family: inherit;
-  font-size: inherit;
-}
-
-html {
-  height: 100%;
-  color: white;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-  width: calc(100vw - 400px);
-  background-color: dimgrey;
-}
+@import './components/view/appView';
+@import './components/view/aside/aside';
+@import './components/view/code-viewer/code';
+@import './components/view/css-selector/css-selector';
+@import './components/view/table/table';

@@ -1,9 +1,9 @@
-import './table.scss';
-import { ViewParams } from '../types';
 import View from '../view';
-import { GameHTMLTag } from '../../../data/levels';
+import { ViewParams } from '../types';
 import ElementCreator from '../../util/element-creator';
-import { CssClasses, ATTRIBUTE_SIGN_NAME } from './types';
+import { GameHTMLTag } from '../../../data/levels';
+import { CssClasses, Constants } from './types';
+import { AnimationCssClasses, AnimationСonstants } from '../../util/animation/types';
 
 export default class TableView extends View {
   tooltip: ElementCreator;
@@ -37,7 +37,7 @@ export default class TableView extends View {
     this.getHtmlElement().addEventListener('mouseover', (e) => {
       const { target }: { target: EventTarget | null } = e;
       if (!target || !(target instanceof Element)) return;
-      const hoverDivSign: string | null = target.getAttribute(ATTRIBUTE_SIGN_NAME);
+      const hoverDivSign: string | null = target.getAttribute(Constants.ATTRIBUTE_SIGN_NAME);
       if (hoverDivSign) {
         callback(hoverDivSign);
       } else {
@@ -66,10 +66,18 @@ export default class TableView extends View {
   public shakeTableElements(signsElements: string[]): void {
     signsElements.forEach((sign: string) => {
       const element: HTMLElement | undefined = this.elements.get(sign);
-      element?.classList.add(CssClasses.ANIMATION_SHAKE);
+      element?.classList.add(AnimationCssClasses.SHAKE);
       setTimeout(() => {
-        element?.classList.remove(CssClasses.ANIMATION_SHAKE);
-      }, 500);
+        element?.classList.remove(AnimationCssClasses.SHAKE);
+      }, AnimationСonstants.WRONG_DURATION);
+    });
+  }
+
+  public showWinAnimation(): void {
+    this.elements.forEach((element: HTMLElement) => {
+      if (element.classList.contains(AnimationCssClasses.WIN_CONDITION)) {
+        element.classList.replace(AnimationCssClasses.WIN_CONDITION, AnimationCssClasses.IS_WIN);
+      }
     });
   }
 
@@ -80,18 +88,18 @@ export default class TableView extends View {
       textContent: '',
     });
     if (markup.signElement) {
-      result.setAttribute(ATTRIBUTE_SIGN_NAME, markup.signElement);
+      result.setAttribute(Constants.ATTRIBUTE_SIGN_NAME, markup.signElement);
       this.elements.set(markup.signElement, result.getElement());
     }
     if (markup.idName) {
       result.setAttribute('id', markup.idName);
     }
-    if (markup.winCondition) result.addCssClasses([CssClasses.ANIMATION_WIN_CONDITION]);
+    if (markup.winCondition) result.addCssClasses([AnimationCssClasses.WIN_CONDITION]);
     if (markup.children && markup.children.length) {
       markup.children.forEach((child: GameHTMLTag) => {
-        const el: HTMLElement = this.buildTable(child);
-        if (child.signElement) this.elements?.set(child.signElement, el);
-        result.addInnerElement(el);
+        const element: HTMLElement = this.buildTable(child);
+        if (child.signElement) this.elements?.set(child.signElement, element);
+        result.addInnerElement(element);
       });
     }
     return result.getElement();
@@ -109,9 +117,9 @@ export default class TableView extends View {
     const tagName = element.tagName.toLowerCase();
     const { id } = element;
     const visualClasses: string[] = [
-      CssClasses.ANIMATION_SHAKE,
-      CssClasses.ANIMATION_WIN_CONDITION,
-      CssClasses.SELECTED_ELEMENT,
+      AnimationCssClasses.WIN_CONDITION,
+      AnimationCssClasses.SHAKE,
+      AnimationCssClasses.IS_WIN,
     ];
     let className = '';
     element.classList.forEach((elementClass) => {

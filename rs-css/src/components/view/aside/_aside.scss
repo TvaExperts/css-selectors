@@ -1,16 +1,16 @@
 .aside {
   position: fixed;
   right: 0;
-  width: 400px;
+  width: $aside-width;
   height: 100%;
   padding: 5px 0;
   background-color: brown;
   transition: all 0.3s ease-in;
 
-  @include media-tablet {
-    right: -400px;
+  @include media-hide-side {
+    right: -$aside-width;
 
-    &.open {
+    &.aside--open {
       right: 0px;
     }
   }
@@ -21,8 +21,8 @@
   text-align: center;
 }
 
-@include media-tablet {
-  .aside__arraw {
+.aside__arrow-button {
+  @include media-hide-side {
     content: '';
     position: absolute;
     left: -30px;
@@ -31,7 +31,7 @@
     height: 60px;
     width: 30px;
     background-color: brown;
-    background-image: url('../assets/images/arraw-open.png');
+    background-image: url('../assets/images/arrow-open.png');
     background-position: 70% 50%;
     background-size: 50%;
     background-repeat: no-repeat;
@@ -39,8 +39,8 @@
     border-bottom-left-radius: 60px;
     cursor: pointer;
 
-    .open & {
-      background-image: url('../assets/images/arraw-close.png');
+    .aside--open & {
+      background-image: url('../assets/images/arrow-close.png');
     }
   }
 }

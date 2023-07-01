@@ -5,9 +5,9 @@ import { Level, ResolveStatus } from '../../controller/types';
 import { CssClasses, ATTRIBUTE_LEVEL_ID, TextHTML } from './types';
 
 export default class AsideView extends View {
-  levelList: ElementCreator;
-  levelItems: ElementCreator[];
-  resetProgressButton: ElementCreator;
+  private levelList: ElementCreator;
+  private levelItems: ElementCreator[];
+  private resetProgressButton: ElementCreator;
 
   constructor() {
     const params: ViewParams = {
@@ -27,7 +27,8 @@ export default class AsideView extends View {
       classNames: [CssClasses.RESET_PROGRESS],
       textContent: TextHTML.RESET_PROGRESS,
     });
-    this.configeView();
+
+    this.configureView();
     this.levelItems = [];
   }
 
@@ -125,15 +126,26 @@ export default class AsideView extends View {
     });
   }
 
-  private configeView(): void {
+  private configureView(): void {
+    const arrowButtonElementCreator: ElementCreator = new ElementCreator({
+      tag: 'div',
+      classNames: [CssClasses.ASIDE_ARROW],
+      textContent: '',
+    });
+    arrowButtonElementCreator.getElement().addEventListener('click', this.toggleOpenAside.bind(this));
     const titleElementCreator: ElementCreator = new ElementCreator({
       tag: 'p',
       classNames: [CssClasses.ASIDE_TITLE],
       textContent: TextHTML.LIST_TITLE,
     });
+    this.viewElementCreator.addInnerElement(arrowButtonElementCreator);
     this.viewElementCreator.addInnerElement(titleElementCreator);
     this.viewElementCreator.addInnerElement(this.levelList);
     this.viewElementCreator.addInnerElement(this.resetProgressButton);
+  }
+
+  private toggleOpenAside(): void {
+    this.viewElementCreator.getElement().classList.toggle(CssClasses.ASIDE_OPEN);
   }
 
   private createCheckmarkBlock(resolveStatus: ResolveStatus): ElementCreator {

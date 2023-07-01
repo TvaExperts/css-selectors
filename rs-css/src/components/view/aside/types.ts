@@ -1,6 +1,8 @@
 enum CssClasses {
   ASIDE = 'aside',
   ASIDE_TITLE = 'aside__title',
+  ASIDE_ARROW = 'aside__arrow-button',
+  ASIDE_OPEN = 'aside--open',
   LEVEL_LIST = 'level-list',
   LIST_ITEM = 'level-list__item',
   ITEM_CHECKMARK = 'level-list__item-checkmark',

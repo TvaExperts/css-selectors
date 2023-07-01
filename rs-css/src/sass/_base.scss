@@ -24,10 +24,10 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100%;
-  width: calc(100vw - 400px);
+  max-width: calc(100vw - $aside-width);
   background-color: dimgrey;
 
-  @include media-tablet {
-    width: 100%;
+  @include media-hide-side {
+    max-width: 100%;
   }
 }

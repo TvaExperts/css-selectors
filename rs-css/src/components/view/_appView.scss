@@ -18,6 +18,10 @@
   width: 750px;
   padding: 30px 0;
   background: darkolivegreen;
+
+  @include media-hide-side {
+    width: 90%;
+  }
 }
 
 .main__help {

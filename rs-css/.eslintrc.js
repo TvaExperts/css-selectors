@@ -1,5 +1,5 @@
 module.exports = {
-  plugins: ['prettier', 'import', '@typescript-eslint'],
+  plugins: ['prettier', 'import', '@typescript-eslint', 'jest'],
   extends: [
     'airbnb-base',
     'airbnb-typescript/base',
@@ -13,7 +13,7 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['.eslintrc.js', 'webpack.config.js'],
+  ignorePatterns: ['.eslintrc.js', 'webpack.config.js', '*.test.ts'],
   env: {
     es6: true,
     browser: true,

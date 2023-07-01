@@ -5,7 +5,7 @@ import CodeViewerView from './code-viewer/code-viewer-view';
 import CssSelectorView from './css-selector/css-selector-view';
 import { Level } from '../controller/types';
 import { CssClasses, TextHTML, LinkHTML } from './types';
-import { AnimationCssClasses, AnimationСonstants } from '../util/animation/types';
+import { AnimationCssClasses, AnimationConstants } from '../util/animation/types';
 
 export default class AppView {
   private asideView: AsideView;
@@ -88,13 +88,14 @@ export default class AppView {
     this.asideView.selectLevel(level.id);
     this.codeView.setNewCode(level.markup);
     this.tableView.setNewTable(level.markup);
-    this.mainTitle.setTextContent(level.title);
+
+    this.mainTitle.getElement().innerHTML = this.buildDescription(level.description);
     this.cssSelectorView.clearInput();
   }
 
   public shakeEditor(): void {
     this.editor.addCssClasses([AnimationCssClasses.SHAKE]);
-    setTimeout(() => this.editor.removeCssClass([AnimationCssClasses.SHAKE]), AnimationСonstants.WRONG_DURATION);
+    setTimeout(() => this.editor.removeCssClass([AnimationCssClasses.SHAKE]), AnimationConstants.WRONG_DURATION);
   }
 
   public shakeTableElements(signsElements: string[]): void {
@@ -161,5 +162,13 @@ export default class AppView {
     footerElementCreator.addInnerElement(yearElementCreator.getElement());
     footerElementCreator.addInnerElement(schoolElementCreator.getElement());
     document.body.append(footerElementCreator.getElement());
+  }
+
+  private buildDescription(text: string): string {
+    const partsOfDescription = text.split('$');
+    return partsOfDescription.reduce((sum: string, part: string, i: number) => {
+      const partWithBold = i % 2 ? `<b>${part}</b>` : part;
+      return sum + partWithBold;
+    }, '');
   }
 }

@@ -66,7 +66,7 @@ export default class AsideView extends View {
       const levelCaptionElementCreator: ElementCreator = new ElementCreator({
         tag: 'p',
         classNames: [CssClasses.ITEM_CAPTION],
-        textContent: level.title,
+        textContent: `Level ${level.id}:  ${level.title}`,
       });
       levelItemElementCreator.addInnerElement(levelCaptionElementCreator);
       this.levelItems.push(levelItemElementCreator);

@@ -71,7 +71,7 @@ export default class Model {
         signs: [],
         winSigns: [],
         id: newId,
-        resolveStatus: this.getStatusLevelFromState(newId),
+        resolveStatus: this.getStatusLevelFromLoadedState(newId),
       };
       level.markup = this.getMarkupWithSigns(level.markup, level);
       this.levels.push(level);
@@ -117,9 +117,9 @@ export default class Model {
     return result;
   }
 
-  private getStatusLevelFromState(lelelId: number): ResolveStatus {
+  private getStatusLevelFromLoadedState(levelId: number): ResolveStatus {
     if (!this.state.levelsState.length) return ResolveStatus.NO;
-    const status: StateOfLevel | undefined = this.state.levelsState.find((level: StateOfLevel) => level.id === lelelId);
+    const status: StateOfLevel | undefined = this.state.levelsState.find((level: StateOfLevel) => level.id === levelId);
     return status?.resolveStatus || ResolveStatus.NO;
   }
 

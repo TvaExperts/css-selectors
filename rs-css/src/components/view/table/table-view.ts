@@ -2,8 +2,8 @@ import View from '../view';
 import { ViewParams } from '../types';
 import ElementCreator from '../../util/element-creator';
 import { GameHTMLTag } from '../../../data/levels';
+import { AnimationCssClasses, AnimationConstants } from '../../util/animation/types';
 import { CssClasses, Constants } from './types';
-import { AnimationCssClasses, AnimationСonstants } from '../../util/animation/types';
 
 export default class TableView extends View {
   tooltip: ElementCreator;
@@ -58,7 +58,7 @@ export default class TableView extends View {
     }
   }
 
-  public setNewTable(markup: GameHTMLTag[]) {
+  public setNewTable(markup: GameHTMLTag[]): void {
     this.tableSurface.removeInnerElements();
     markup.forEach((tag) => this.tableSurface.addInnerElement(this.buildTable(tag)));
   }
@@ -69,7 +69,7 @@ export default class TableView extends View {
       element?.classList.add(AnimationCssClasses.SHAKE);
       setTimeout(() => {
         element?.classList.remove(AnimationCssClasses.SHAKE);
-      }, AnimationСonstants.WRONG_DURATION);
+      }, AnimationConstants.WRONG_DURATION);
     });
   }
 

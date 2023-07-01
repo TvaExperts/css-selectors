@@ -5,13 +5,11 @@ import { ResolveStatus } from './types';
 describe('Model tests', () => {
   test('Should load all Levels from LevelsData', () => {
     const model = new Model();
-    model.getLevelCount;
     expect(model.getLevelCount).toBe(LevelData.length);
   });
 
   test('Should change correct current Level', () => {
     const model = new Model();
-    model.currentLevel.id;
     expect(model.currentLevel.id).toBe(1);
     model.setCurrentLevel(2);
     expect(model.currentLevel.id).toBe(2);

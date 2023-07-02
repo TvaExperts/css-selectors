@@ -7,7 +7,7 @@ enum CssClasses {
   HEADER = 'header',
   MAIN = 'main',
   MAIN_HELP = 'main__help',
-  MAIN_TITLE = 'main__title',
+  MAIN_LEVEL_DESCRIPTION = 'main__level-description',
   MAIN_EDITOR = 'main__editor',
   ANIMATION_SHAKE = 'animation-shake',
   FOOTER = 'footer',

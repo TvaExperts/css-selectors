@@ -1,14 +1,16 @@
 .aside {
   position: fixed;
   right: 0;
-  width: $aside-width;
+  display: flex;
+  flex-direction: column;
+  width: $width-aside;
   height: 100%;
-  padding: 5px 0;
-  background-color: brown;
+  padding: 12px 0;
+  background-color: $color-main;
   transition: all 0.3s ease-in;
 
   @include media-hide-side {
-    right: -$aside-width;
+    right: -$width-aside;
 
     &.aside--open {
       right: 0px;
@@ -17,7 +19,6 @@
 }
 
 .aside__title {
-  padding: 10px;
   text-align: center;
 }
 
@@ -30,7 +31,7 @@
     z-index: 10;
     height: 60px;
     width: 30px;
-    background-color: brown;
+    background-color: $color-main;
     background-image: url('../assets/images/arrow-open.png');
     background-position: 70% 50%;
     background-size: 50%;
@@ -48,6 +49,7 @@
 .level-list {
   padding: 10px 0;
   list-style-type: none;
+  flex-grow: 1;
 }
 
 .level-list__item {
@@ -59,7 +61,7 @@
 
   &:hover,
   &.level-selected {
-    background-color: lightcoral;
+    background-color: $color-selection;
   }
 }
 
@@ -69,23 +71,24 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  background-image: url('../assets/images/gray-checkmark.png');
+  background-image: url('../assets/icons/gray-checkmark.svg');
 
   &.done {
-    background-image: url('../assets/images/green-checkmark.png');
+    background-image: url('../assets/icons/green-checkmark.svg');
   }
 
   &.done-with-hint {
-    background-image: url('../assets/images/yellow-checkmark.png');
+    background-image: url('../assets/icons/yellow-checkmark.svg');
   }
 }
 
 .level-list__reset-button {
-  width: 125px;
   margin: 0 auto;
-  padding: 10px;
-  color: crimson;
+  padding: 5px 10px;
+  color: $color-warning;
   text-align: center;
-  background-color: aqua;
+  background-color: $color-background;
+  border: 5px solid black;
+  border-radius: 15px;
   cursor: pointer;
 }

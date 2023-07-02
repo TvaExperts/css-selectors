@@ -3,6 +3,7 @@ import { ViewParams } from '../types';
 import ElementCreator from '../../util/element-creator';
 import { GameHTMLTag } from '../../../data/levels';
 import { AnimationCssClasses, AnimationConstants } from '../../util/animation/types';
+import { getHighlightedTags } from '../../util/highlight-js';
 import { CssClasses, Constants } from './types';
 
 export default class TableView extends View {
@@ -52,7 +53,8 @@ export default class TableView extends View {
     const element: HTMLElement | undefined = this.elements.get(signElement);
     if (element) {
       element.classList.add(CssClasses.SELECTED_ELEMENT);
-      this.tooltip.setTextContent(this.getTooltipTextFromElement(element));
+      this.tooltip.getElement().innerHTML = getHighlightedTags(this.getTooltipTextFromElement(element));
+      this.tooltip.getElement().style.display = 'block';
       this.tooltip.getElement().style.left = `${element.getBoundingClientRect().x}px`;
       this.tooltip.getElement().style.top = `${element.getBoundingClientRect().y - 40}px`;
     }
@@ -109,6 +111,7 @@ export default class TableView extends View {
     this.elements.forEach((element: HTMLElement) => {
       element.classList.remove(CssClasses.SELECTED_ELEMENT);
     });
+    this.tooltip.getElement().style.display = 'none';
     this.tooltip.removeInnerElements();
   }
 
@@ -120,6 +123,7 @@ export default class TableView extends View {
       AnimationCssClasses.WIN_CONDITION,
       AnimationCssClasses.SHAKE,
       AnimationCssClasses.IS_WIN,
+      CssClasses.SELECTED_ELEMENT,
     ];
     let className = '';
     element.classList.forEach((elementClass) => {

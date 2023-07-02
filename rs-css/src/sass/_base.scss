@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: local('PF BeauSans Pro'), url('../assets/fonts/PFBeauSansPro-Bold.woff2') format('woff2'),
+    url('../assets/fonts/PFBeauSansPro-Bold.woff') format('woff'),
+    url('../assets/fonts/PFBeauSansPro-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PF BeauSans Pro';
+  src: local('PF BeauSans Pro'), url('../assets/fonts/PFBeauSansPro-SemiBold.woff2') format('woff2'),
+    url('../assets/fonts/PFBeauSansPro-SemiBold.woff') format('woff'),
+    url('../assets/fonts/PFBeauSansPro-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -16,6 +34,12 @@ input {
 
 html {
   height: 100%;
+  font-family: 'PF BeauSans Pro';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  text-transform: uppercase;
   color: white;
 }
 
@@ -24,8 +48,8 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100%;
-  max-width: calc(100vw - $aside-width);
-  background-color: dimgrey;
+  max-width: calc(100vw - $width-aside);
+  background-color: $color-background;
 
   @include media-hide-side {
     max-width: 100%;

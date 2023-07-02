@@ -14,7 +14,7 @@ enum CssClasses {
 }
 
 enum TextHTML {
-  RESET_PROGRESS = 'Reset progress!',
+  RESET_PROGRESS = 'Reset progress',
   LIST_TITLE = 'Levels',
 }
 

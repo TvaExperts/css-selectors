@@ -36,7 +36,7 @@ export default class AppView {
 
     this.mainTitle = new ElementCreator({
       tag: 'p',
-      classNames: [CssClasses.MAIN_TITLE],
+      classNames: [CssClasses.MAIN_LEVEL_DESCRIPTION],
       textContent: '',
     });
 
@@ -106,9 +106,12 @@ export default class AppView {
     this.cssSelectorView.showHint(hint);
   }
 
-  public showWin(level: Level): void {
-    this.asideView.updateCheckmarkStatus(level);
+  public showWinAnimation(): void {
     this.tableView.showWinAnimation();
+  }
+
+  public updateCheckmarkOfLevel(level: Level): void {
+    this.asideView.updateCheckmarkStatus(level);
   }
 
   private buildHeader(): void {
@@ -167,7 +170,7 @@ export default class AppView {
   private buildDescription(text: string): string {
     const partsOfDescription = text.split('$');
     return partsOfDescription.reduce((sum: string, part: string, i: number) => {
-      const partWithBold = i % 2 ? `<b>${part}</b>` : part;
+      const partWithBold = i % 2 ? `<span>${part}</span>` : part;
       return sum + partWithBold;
     }, '');
   }

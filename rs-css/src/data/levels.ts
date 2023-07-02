@@ -117,7 +117,7 @@ const LevelData: LevelConfigs[] = [
   },
   {
     hint: '#test',
-    title: 'No-No! No-No! No-No!',
+    title: 'No-No! No-No!',
     description: 'ssssss $666$ ewr $6666$ ewr $6666$ ewr $6666$ wer!',
     markup: [
       {

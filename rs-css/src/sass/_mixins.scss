@@ -1,11 +1,11 @@
 @mixin media-hide-side {
-  @media (max-width: $hide-aside-width) {
+  @media (max-width: $width-hide-aside) {
     @content;
   }
 }
 
 @mixin media-tablet {
-  @media (max-width: $tablet-width) {
+  @media (max-width: $width-tablet) {
     @content;
   }
 }

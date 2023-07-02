@@ -7,8 +7,16 @@
   z-index: 11;
   top: 0px;
   left: 0px;
-  color: darkblue;
-  background-color: blanchedalmond;
+  display: none;
+  padding: 5px;
+  font-family: 'Roboto Mono';
+  text-transform: none;
+  font-weight: 400;
+  line-height: 20px;
+  font-size: 20px;
+  background-color: $color-main;
+
+  border-radius: 3px;
   box-shadow: 0 0 3px #000;
 }
 
@@ -49,4 +57,3 @@
     box-shadow: 0 0 10px #000;
   }
 }
-

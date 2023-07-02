@@ -7,7 +7,7 @@
   height: 100px;
   column-gap: 100px;
   padding: 20px;
-  background-color: grey;
+  border: 1px solid gray;
 }
 
 .main {
@@ -17,10 +17,16 @@
   align-items: center;
   width: 750px;
   padding: 30px 0;
-  background: darkolivegreen;
+  border: 1px solid gray;
 
   @include media-hide-side {
     width: 90%;
+  }
+}
+
+.main__level-description {
+  span {
+    color: $color-warning;
   }
 }
 

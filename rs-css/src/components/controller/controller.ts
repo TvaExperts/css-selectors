@@ -66,8 +66,11 @@ export default class Controller {
 
     if (this.isSameArrays(winConditionArraySigns, selectedSignsElements)) {
       this.model.setWinStatusToCurrentLevel();
-      this.view.showWin(this.model.currentLevel);
-      setTimeout(() => this.setNextLevel(), AnimationConstants.WIN_DURATION);
+      this.view.showWinAnimation();
+      setTimeout(() => {
+        this.view.updateCheckmarkOfLevel(this.model.currentLevel);
+        this.setNextLevel();
+      }, AnimationConstants.WIN_DURATION);
     } else {
       this.view.shakeTableElements(selectedSignsElements);
     }

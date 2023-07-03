@@ -15,3 +15,49 @@
 .button--warning {
   color: $color-warning;
 }
+
+.modal {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  transition: 0.3s all ease;
+
+  body.modal-opened & {
+    z-index: 3000;
+    opacity: 1;
+  }
+}
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  height: 300px;
+  padding: 30px;
+  background-color: $color-background;
+  @extend %border-dark;
+  @extend %shadow-dark;
+
+  @include media-tablet {
+    width: 300px;
+    height: 225px;
+    padding: 20px;
+  }
+}
+
+.modal__text-message {
+  text-align: center;
+}
+
+.modal__close-button {
+  margin: 0 auto;
+}

@@ -45,6 +45,7 @@ export default class AppView {
     this.buildMain();
     document.body.append(this.asideView.getHtmlElement());
     this.buildFooter();
+    this.buildGreetingModal();
   }
 
   public addLevels(levels: Level[]): void {
@@ -59,11 +60,11 @@ export default class AppView {
     this.asideView.resetProgress();
   }
 
-  public setClickListItemCallback(callback: (levelId: number) => void) {
+  public setClickListItemCallback(callback: (levelId: number) => void): void {
     this.asideView.setClickListItemCallback(callback);
   }
 
-  public setHoverElementCallback(callback: (signElement: string) => void) {
+  public setHoverElementCallback(callback: (signElement: string) => void): void {
     this.codeView.setHoverListeners(callback);
     this.tableView.setHoverListeners(callback);
   }
@@ -82,14 +83,13 @@ export default class AppView {
   }
 
   public getSignsElementBySelector(selector: string): string[] {
-    return this.codeView.getSignsElementBySelector(selector);
+    return this.tableView.getSignsElementBySelector(selector);
   }
 
   public setNewLevel(level: Level): void {
     this.asideView.selectLevel(level.id);
     this.codeView.setNewCode(level.markup);
     this.tableView.setNewTable(level.markup);
-
     this.mainTitle.getElement().innerHTML = this.buildDescription(level.description);
     this.cssSelectorView.clearInput();
   }
@@ -113,6 +113,18 @@ export default class AppView {
 
   public updateCheckmarkOfLevel(level: Level): void {
     this.asideView.updateCheckmarkStatus(level);
+  }
+
+  public showGreetingsModal(): void {
+    document.body.classList.add(GlobalCssClasses.MODAL_OPENED);
+  }
+
+  private hideModal(e: MouseEvent): void {
+    const { target }: { target: EventTarget | null } = e;
+    if (!(target instanceof Element)) return;
+    if (target.classList.contains(GlobalCssClasses.MODAL) || target.classList.contains(GlobalCssClasses.MODAL_CLOSE)) {
+      document.body.classList.remove(GlobalCssClasses.MODAL_OPENED);
+    }
   }
 
   private buildHeader(): void {
@@ -173,6 +185,42 @@ export default class AppView {
     footerElementCreator.addInnerElement(yearElementCreator.getElement());
     footerElementCreator.addInnerElement(schoolElementCreator.getElement());
     document.body.append(footerElementCreator.getElement());
+  }
+
+  private buildGreetingModal(): void {
+    const modalElementCreator = new ElementCreator({
+      tag: 'div',
+      classNames: [GlobalCssClasses.MODAL],
+      textContent: '',
+    });
+    modalElementCreator.getElement().addEventListener('click', (e: MouseEvent) => this.hideModal(e));
+    const modalContentElementCreator = new ElementCreator({
+      tag: 'div',
+      classNames: [GlobalCssClasses.MODAL_CONTENT],
+      textContent: '',
+    });
+
+    const modalTextCongratsMessageElementCreator = new ElementCreator({
+      tag: 'p',
+      classNames: [GlobalCssClasses.MODAL_TEXT_MESSAGE],
+      textContent: TextHTML.MODAL_CONGRATS,
+    });
+    const modalTextGoodLuckMessageElementCreator = new ElementCreator({
+      tag: 'p',
+      classNames: [GlobalCssClasses.MODAL_TEXT_MESSAGE],
+      textContent: TextHTML.MODAL_GOOD_LUCK,
+    });
+    const modalCloseButtonElementCreator = new ElementCreator({
+      tag: 'div',
+      classNames: [GlobalCssClasses.MODAL_CLOSE, GlobalCssClasses.BUTTON],
+      textContent: TextHTML.MODAL_CLOSE,
+    });
+    modalCloseButtonElementCreator.getElement().addEventListener('click', (e: MouseEvent) => this.hideModal(e));
+    modalContentElementCreator.addInnerElement(modalTextCongratsMessageElementCreator);
+    modalContentElementCreator.addInnerElement(modalTextGoodLuckMessageElementCreator);
+    modalContentElementCreator.addInnerElement(modalCloseButtonElementCreator);
+    modalElementCreator.addInnerElement(modalContentElementCreator);
+    document.body.append(modalElementCreator.getElement());
   }
 
   private buildDescription(text: string): string {

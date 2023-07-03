@@ -76,13 +76,14 @@ export default class Controller {
     }
   }
 
-  private setNextLevel() {
+  private setNextLevel(): void {
     const nextLevel: number = this.model.currentLevel.id + 1;
     if (nextLevel <= this.model.getLevelCount) {
       this.model.setCurrentLevel(nextLevel);
       this.view.setNewLevel(this.model.currentLevel);
     } else {
-      console.log('last level'); // TODO
+      this.view.showGreetingsModal();
+      this.view.setNewLevel(this.model.currentLevel);
     }
   }
 

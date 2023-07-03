@@ -23,6 +23,9 @@ enum TextHTML {
   ASIDE_TITLE = 'Levels',
   FOOTER_YEAR = '2023',
   FOOTER_GIT = 'Git',
+  MODAL_CONGRATS = 'Congratulations!',
+  MODAL_GOOD_LUCK = 'Good luck in your studies!',
+  MODAL_CLOSE = 'Close',
 }
 
 enum LinkHTML {

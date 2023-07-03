@@ -89,6 +89,22 @@ export default class TableView extends View {
     });
   }
 
+  public getSignsElementBySelector(selector: string): string[] {
+    let nodeList: NodeListOf<Element> | undefined;
+    try {
+      nodeList = this.tableSurface.getElement().querySelectorAll(`${selector}`);
+    } catch {
+      return [];
+    }
+    const signsArr: string[] = [];
+    nodeList.forEach((node: Element) => {
+      const signElement: string | null = node.getAttribute(Constants.ATTRIBUTE_SIGN_NAME);
+      if (signElement) signsArr.push(signElement);
+    });
+
+    return signsArr;
+  }
+
   private buildTable(markup: GameHTMLTag): HTMLElement {
     const result: ElementCreator = new ElementCreator({
       tag: markup.tagName,

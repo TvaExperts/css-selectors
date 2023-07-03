@@ -75,26 +75,6 @@ export default class CodeViewerView extends View {
     }
   }
 
-  public getSignsElementBySelector(selector: string): string[] {
-    let nodeList: NodeListOf<Element> | undefined;
-    console.log(selector);
-
-    try {
-      nodeList = this.codeBlock.getElement().querySelectorAll(`${selector}`);
-    } catch {
-      return [];
-    }
-    console.log(nodeList);
-    const signsArr: string[] = [];
-
-    nodeList.forEach((node: Element) => {
-      const signElement: string | null = node.getAttribute(Constants.ATTRIBUTE_SIGN_NAME);
-      if (signElement) signsArr.push(signElement);
-    });
-
-    return signsArr;
-  }
-
   private generateLineNumbersText(): string {
     const numbers: string[] = [];
     for (let i = 1; i <= Constants.LINES_COUNT; i += 1) {

@@ -57,7 +57,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: ':nth-child(3)',
+    hint: ':nth-child(2)',
     title: 'I choose the right',
     description: 'select the $right plate$!',
     markup: [
@@ -152,7 +152,7 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: 'plate:nth-child(3) *',
+    hint: 'plate:nth-child(2) *',
     title: 'my plate is center',
     description: 'select $fruit$ from the $center plate$',
     markup: [
@@ -196,7 +196,39 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: 'plate *:nth-child(2)',
+    hint: 'plate:empty',
+    title: 'empty plates',
+    description: 'remove $empty plates$ from the table!',
+    markup: [
+      {
+        tagName: 'plate',
+        children: [
+          {
+            tagName: 'apple',
+            className: 'green',
+          },
+        ],
+      },
+      {
+        tagName: 'plate',
+        winCondition: true,
+      },
+      {
+        tagName: 'plate',
+        children: [
+          {
+            tagName: 'apple',
+          },
+          {
+            tagName: 'apple',
+            className: 'yellow',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    hint: 'plate *:nth-child(1)',
     title: 'one each',
     description: 'I want to tasty $every type$ of apple',
     markup: [
@@ -256,7 +288,7 @@ const LevelData: LevelConfigs[] = [
   {
     hint: 'plate ~ apple',
     title: 'clean table',
-    description: 'Choose $all fruits$ except the $green$ ones!',
+    description: '$Leave$ the fruit $only in the plates$!',
     markup: [
       {
         tagName: 'plate',
@@ -291,18 +323,14 @@ const LevelData: LevelConfigs[] = [
     ],
   },
   {
-    hint: ':not(plate)>apple',
-    title: 'clean table 2',
-    description: 'Choose $all fruits$ except the $green$ ones!',
+    hint: ':nth-child(even), .green',
+    title: 'random pick',
+    description: 'select these fruits',
     markup: [
       {
-        tagName: 'plate',
-        children: [
-          {
-            tagName: 'apple',
-            className: 'green',
-          },
-        ],
+        tagName: 'apple',
+        className: 'green',
+        winCondition: true,
       },
       {
         tagName: 'apple',
@@ -311,23 +339,22 @@ const LevelData: LevelConfigs[] = [
       },
       {
         tagName: 'apple',
-        winCondition: true,
-      },
-      {
-        tagName: 'plate',
-        children: [
-          {
-            tagName: 'apple',
-          },
-          {
-            tagName: 'apple',
-            className: 'yellow',
-          },
-        ],
       },
       {
         tagName: 'apple',
+        className: 'green',
         winCondition: true,
+      },
+      {
+        tagName: 'apple',
+        className: 'yellow',
+      },
+      {
+        tagName: 'orange',
+        winCondition: true,
+      },
+      {
+        tagName: 'apple',
       },
     ],
   },

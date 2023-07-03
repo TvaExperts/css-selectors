@@ -11,24 +11,26 @@ describe('Element Creator tests', () => {
   });
 
   test('Should correct set and remove className', () => {
+    const testClassName: string = 'div-test';
     const elementCreator = new ElementCreator({
       tag: 'div',
-      classNames: ['div-test'],
+      classNames: [testClassName],
       textContent: '',
     });
-    expect(elementCreator.getElement().className).toBe('div-test');
-    elementCreator.removeCssClass(['div-test']);
+    expect(elementCreator.getElement().className).toBe(testClassName);
+    elementCreator.removeCssClass([testClassName]);
     expect(elementCreator.getElement().className).toBe('');
   });
 
   test('Should set correct ID', () => {
     const elementCreator = new ElementCreator({
       tag: 'div',
-      classNames: ['div-test'],
+      classNames: [],
       textContent: '',
     });
-    elementCreator.setAttribute('id', 'Test-ID');
-    expect(elementCreator.getElement().id).toBe('Test-ID');
+    const idName: string = 'Test-ID';
+    elementCreator.setAttribute('id', idName);
+    expect(elementCreator.getElement().id).toBe(idName);
   });
 
   test('Should correct add and remove inner elements', () => {

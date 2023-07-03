@@ -4,7 +4,7 @@ const AnimationConstants = {
 };
 
 enum AnimationCssClasses {
-  SHAKE = 'animation-shake',
+  WRONG = 'animation-wrong',
   IS_WIN = 'animation-is-win',
   WIN_CONDITION = 'animation-win-condition',
 }

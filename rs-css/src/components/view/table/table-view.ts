@@ -72,10 +72,9 @@ export default class TableView extends View {
       const element: HTMLElement | undefined = this.elements.get(sign);
       const isWinCondition = element?.classList.contains(AnimationCssClasses.WIN_CONDITION);
       if (isWinCondition) element?.classList.remove(AnimationCssClasses.WIN_CONDITION);
-      element?.classList.add(AnimationCssClasses.SHAKE);
-
+      element?.classList.add(AnimationCssClasses.WRONG);
       setTimeout(() => {
-        element?.classList.remove(AnimationCssClasses.SHAKE);
+        element?.classList.remove(AnimationCssClasses.WRONG);
         if (isWinCondition) element?.classList.add(AnimationCssClasses.WIN_CONDITION);
       }, AnimationConstants.WRONG_DURATION);
     });
@@ -140,7 +139,7 @@ export default class TableView extends View {
     const { id } = element;
     const visualClasses: string[] = [
       AnimationCssClasses.WIN_CONDITION,
-      AnimationCssClasses.SHAKE,
+      AnimationCssClasses.WRONG,
       AnimationCssClasses.IS_WIN,
       CssClasses.SELECTED_ELEMENT,
     ];

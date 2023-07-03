@@ -48,7 +48,7 @@ export default class AppView {
     this.buildGreetingModal();
   }
 
-  public addLevels(levels: Level[]): void {
+  public addLevelsInAside(levels: Level[]): void {
     this.asideView.createLevelsList(levels);
   }
 
@@ -95,8 +95,8 @@ export default class AppView {
   }
 
   public shakeEditor(): void {
-    this.editor.addCssClasses([AnimationCssClasses.SHAKE]);
-    setTimeout(() => this.editor.removeCssClass([AnimationCssClasses.SHAKE]), AnimationConstants.WRONG_DURATION);
+    this.editor.addCssClasses([AnimationCssClasses.WRONG]);
+    setTimeout(() => this.editor.removeCssClass([AnimationCssClasses.WRONG]), AnimationConstants.WRONG_DURATION);
   }
 
   public shakeTableElements(signsElements: string[]): void {

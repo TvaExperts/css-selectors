@@ -15,7 +15,7 @@ export default class Controller {
   }
 
   private initData(): void {
-    this.view.addLevels(this.model.levels);
+    this.view.addLevelsInAside(this.model.levels);
   }
 
   private initCallbacks(): void {

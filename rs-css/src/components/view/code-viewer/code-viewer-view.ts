@@ -34,7 +34,7 @@ export default class CodeViewerView extends View {
     this.viewElementCreator.addInnerElement(this.codeBlock);
   }
 
-  public setHoverListeners(callback: (signElement: string) => void) {
+  public setHoverListeners(callback: (signElement: string) => void): void {
     this.getHtmlElement().addEventListener('mouseover', (e) => {
       let { target }: { target: EventTarget | null } = e;
 
@@ -56,7 +56,7 @@ export default class CodeViewerView extends View {
     this.getHtmlElement().addEventListener('mouseleave', () => callback(''));
   }
 
-  public setNewCode(markup: GameHTMLTag[]) {
+  public setNewCode(markup: GameHTMLTag[]): void {
     this.codeBlock.removeInnerElements();
     this.buildHTMLCode(markup);
   }

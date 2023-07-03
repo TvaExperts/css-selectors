@@ -13,6 +13,7 @@
 
   @include media-tablet {
     font-size: 14px;
+    line-height: 20px;
   }
 }
 
@@ -20,17 +21,16 @@
   width: 40px;
   padding: 7px;
   text-align: right;
-  color: lightblue;
-  background-color: darkslateblue;
-  border-right: 1px solid darkblue;
+  background-color: $color-selection;
+  @extend %shadow-dark;
 }
 
 .code-viewer__code {
-  padding: 7px;
   width: 100%;
+  padding: 7px;
+  white-space: nowrap;
 
-  apple,
-  plate {
+  & :not(span) {
     display: block;
     padding-left: 25px;
   }

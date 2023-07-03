@@ -3,6 +3,7 @@ import View from '../view';
 import { ViewParams } from '../types';
 import { Level, ResolveStatus } from '../../controller/types';
 import { CssClasses, ATTRIBUTE_LEVEL_ID, TextHTML } from './types';
+import GlobalCssClasses from '../../../sass/types';
 
 export default class AsideView extends View {
   private levelList: ElementCreator;
@@ -24,7 +25,7 @@ export default class AsideView extends View {
     });
     this.resetProgressButton = new ElementCreator({
       tag: 'div',
-      classNames: [CssClasses.RESET_PROGRESS],
+      classNames: [CssClasses.RESET_PROGRESS, GlobalCssClasses.BUTTON, GlobalCssClasses.BUTTON_WARNING],
       textContent: TextHTML.RESET_PROGRESS,
     });
 
@@ -43,6 +44,7 @@ export default class AsideView extends View {
           if (!stringClickedLevelId) return;
           const levelId: number = parseInt(stringClickedLevelId, 10);
           callback(levelId);
+          this.closeAside();
           return;
         }
         target = target.parentNode;
@@ -146,6 +148,10 @@ export default class AsideView extends View {
 
   private toggleOpenAside(): void {
     this.viewElementCreator.getElement().classList.toggle(CssClasses.ASIDE_OPEN);
+  }
+
+  private closeAside(): void {
+    this.viewElementCreator.removeCssClass([CssClasses.ASIDE_OPEN]);
   }
 
   private createCheckmarkBlock(resolveStatus: ResolveStatus): ElementCreator {

@@ -25,6 +25,9 @@
 a {
   text-decoration: none;
   color: inherit;
+  &:hover {
+    color: $color-background;
+  }
 }
 
 input {
@@ -41,6 +44,12 @@ html {
   line-height: 30px;
   text-transform: uppercase;
   color: white;
+  user-select: none;
+
+  @include media-tablet {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }
 
 body {
@@ -48,7 +57,7 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100%;
-  max-width: calc(100vw - $width-aside);
+  max-width: calc(100% - $width-aside);
   background-color: $color-background;
 
   @include media-hide-side {

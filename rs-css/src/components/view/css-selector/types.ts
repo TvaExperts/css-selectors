@@ -10,6 +10,9 @@ enum TextHTML {
   BUTTON_ENTER = 'Enter',
 }
 
-const HINT_ANIMATION_DURATION: number = 300;
+const Constants = {
+  HINT_ANIMATION_DURATION: 300,
+  INPUT_BASIC_TEXT_COLOR: '#00bfff',
+};
 
-export { CssClasses, TextHTML, HINT_ANIMATION_DURATION };
+export { CssClasses, TextHTML, Constants };

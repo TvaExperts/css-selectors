@@ -2,7 +2,8 @@ import { ViewParams } from '../types';
 import View from '../view';
 import ElementCreator from '../../util/element-creator';
 import { getHighlightedCss } from '../../util/highlight-js';
-import { CssClasses, TextHTML, HINT_ANIMATION_DURATION } from './types';
+import GlobalCssClasses from '../../../sass/types';
+import { CssClasses, TextHTML, Constants } from './types';
 
 export default class CssSelectorView extends View {
   private buttonEnter: ElementCreator;
@@ -18,7 +19,7 @@ export default class CssSelectorView extends View {
 
     this.buttonEnter = new ElementCreator({
       tag: 'div',
-      classNames: [CssClasses.BUTTON_ENTER],
+      classNames: [CssClasses.BUTTON_ENTER, GlobalCssClasses.BUTTON],
       textContent: TextHTML.BUTTON_ENTER,
     });
 
@@ -42,10 +43,12 @@ export default class CssSelectorView extends View {
   public clearInput(): void {
     this.input.value = '';
     this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
+    this.visibleInput.getElement().style.color = '';
   }
 
   public showHint(hint: string): void {
     this.input.value = '';
+    this.removePlaceHolderWhenFocus();
     let index = 0;
     const event: Event = new Event('input');
 
@@ -54,16 +57,19 @@ export default class CssSelectorView extends View {
       if (index > hint.length) index = hint.length;
       this.input.value = hint.slice(0, index);
       this.input.dispatchEvent(event);
-    }, HINT_ANIMATION_DURATION / hint.length);
+    }, Constants.HINT_ANIMATION_DURATION / hint.length);
 
     setTimeout(() => {
       clearInterval(idInterval);
       this.input.focus();
-    }, HINT_ANIMATION_DURATION);
+    }, Constants.HINT_ANIMATION_DURATION);
   }
 
   private returnPlaceHolderInInput(): void {
-    if (!this.input.value) this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
+    if (!this.input.value) {
+      this.visibleInput.setTextContent(TextHTML.PLACEHOLDER);
+      this.visibleInput.getElement().style.color = '';
+    }
   }
 
   private createInput(classes: string[]): HTMLInputElement {
@@ -72,11 +78,15 @@ export default class CssSelectorView extends View {
     input.addEventListener('input', () => this.changeInputText());
     input.addEventListener('blur', () => this.returnPlaceHolderInInput());
     input.addEventListener('focus', () => this.removePlaceHolderWhenFocus());
+    input.maxLength = 36;
     return input;
   }
 
   private removePlaceHolderWhenFocus(): void {
-    if (!this.input.value) this.visibleInput.setTextContent('');
+    if (!this.input.value) {
+      this.visibleInput.setTextContent('');
+      this.visibleInput.getElement().style.color = Constants.INPUT_BASIC_TEXT_COLOR;
+    }
   }
 
   private changeInputText(): void {

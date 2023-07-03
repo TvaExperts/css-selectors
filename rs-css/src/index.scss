@@ -1,7 +1,9 @@
 @import './sass/constants';
 @import './sass/mixins';
+@import './sass/placeholders';
 @import './sass/base';
-@import './components/util/animation/animations';
+@import './sass/blocks';
+@import './sass/animation/animations';
 
 @import './components/view/appView';
 @import './components/view/aside/aside';

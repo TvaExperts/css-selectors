@@ -77,13 +77,14 @@ export default class CodeViewerView extends View {
 
   public getSignsElementBySelector(selector: string): string[] {
     let nodeList: NodeListOf<Element> | undefined;
+    console.log(selector);
 
     try {
-      nodeList = this.codeBlock.getElement().querySelectorAll(selector);
+      nodeList = this.codeBlock.getElement().querySelectorAll(`${selector}`);
     } catch {
       return [];
     }
-
+    console.log(nodeList);
     const signsArr: string[] = [];
 
     nodeList.forEach((node: Element) => {
@@ -124,7 +125,6 @@ export default class CodeViewerView extends View {
       result.setAttribute(Constants.ATTRIBUTE_SIGN_NAME, markup.signElement);
       this.elements?.set(markup.signElement, result.getElement());
     }
-    if (markup.idName) result.setAttribute('id', markup.idName);
 
     if (markup.children && markup.children.length) {
       result.getElement().innerHTML = getHighlightedTags(`<${this.getTagForHighlight(markup)}>`);
@@ -154,7 +154,6 @@ export default class CodeViewerView extends View {
   private getTagForHighlight(markup: GameHTMLTag): string {
     let result: string = markup.tagName;
     if (markup.className) result += ` class="${markup.className}"`;
-    if (markup.idName) result += ` id="${markup.idName}"`;
     return result;
   }
 }

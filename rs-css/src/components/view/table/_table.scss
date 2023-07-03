@@ -1,23 +1,42 @@
 .table {
-  // position: relative;
+  min-width: 400px;
+  min-height: 210px;
+  margin-bottom: 20px;
+  padding: 5px;
+  @extend %border-dark;
+  @extend %shadow-dark;
+
+  @include media-tablet {
+    min-width: 300px;
+    min-height: 165px;
+  }
 }
 
 .table__tooltip {
   position: absolute;
-  z-index: 11;
+  z-index: 2000;
   top: 0px;
   left: 0px;
   display: none;
   padding: 5px;
+  white-space: nowrap;
   font-family: 'Roboto Mono';
   text-transform: none;
   font-weight: 400;
   line-height: 20px;
   font-size: 20px;
   background-color: $color-main;
-
   border-radius: 3px;
-  box-shadow: 0 0 3px #000;
+  @extend %shadow-dark;
+
+  @include media-hide-side {
+    white-space: normal;
+  }
+
+  @include media-tablet {
+    line-height: 14px;
+    font-size: 14px;
+  }
 }
 
 .table__surface {
@@ -26,34 +45,71 @@
   justify-content: center;
   gap: 20px;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 20px;
-  background: yellowgreen;
+  height: 100%;
+  padding: 10px;
+  background: $color-selection;
+  border-radius: 7px;
+
+  apple,
+  orange {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    @include media-tablet {
+      width: 50px;
+      height: 50px;
+    }
+  }
 
   apple {
-    position: relative;
-    display: block;
-    width: 50px;
-    height: 50px;
-    background-color: red;
+    background-image: url('../assets/images/apple.png');
+
+    &.green {
+      background-image: url('../assets/images/apple-green.png');
+    }
+
+    &.yellow {
+      background-image: url('../assets/images/apple-yellow.png');
+    }
+  }
+
+  orange {
+    background-image: url('../assets/images/orange.png');
   }
 
   plate {
     position: relative;
-    display: block;
-    width: 100px;
-    height: 100px;
-    background-color: aqua;
-  }
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 8px;
+    width: 170px;
+    height: 170px;
+    background-image: url('../assets/images/plate.png');
+    border-radius: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 
-  plate * {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    transform: scale(0.5);
+    @include media-tablet {
+      width: 125px;
+      height: 125px;
+    }
   }
 
   & .selected-element {
     box-shadow: 0 0 10px #000;
+  }
+
+  @include media-tablet {
+    gap: 10px;
   }
 }

@@ -1,0 +1,17 @@
+.button {
+  padding: 3px 15px;
+  border-radius: 7px;
+  background-color: $color-selection;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: $color-background;
+  }
+}
+
+.button--warning {
+  color: $color-warning;
+}

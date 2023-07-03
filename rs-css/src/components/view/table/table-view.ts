@@ -2,7 +2,7 @@ import View from '../view';
 import { ViewParams } from '../types';
 import ElementCreator from '../../util/element-creator';
 import { GameHTMLTag } from '../../../data/levels';
-import { AnimationCssClasses, AnimationConstants } from '../../util/animation/types';
+import { AnimationCssClasses, AnimationConstants } from '../../../sass/animation/types';
 import { getHighlightedTags } from '../../util/highlight-js';
 import { CssClasses, Constants } from './types';
 
@@ -56,21 +56,27 @@ export default class TableView extends View {
       this.tooltip.getElement().innerHTML = getHighlightedTags(this.getTooltipTextFromElement(element));
       this.tooltip.getElement().style.display = 'block';
       this.tooltip.getElement().style.left = `${element.getBoundingClientRect().x}px`;
-      this.tooltip.getElement().style.top = `${element.getBoundingClientRect().y - 40}px`;
+      this.tooltip.getElement().style.top = `${this.tableSurface.getElement().getBoundingClientRect().y - 30}px`;
     }
   }
 
   public setNewTable(markup: GameHTMLTag[]): void {
     this.tableSurface.removeInnerElements();
-    markup.forEach((tag) => this.tableSurface.addInnerElement(this.buildTable(tag)));
+    markup.forEach((tag) => {
+      this.tableSurface.addInnerElement(this.buildTable(tag));
+    });
   }
 
   public shakeTableElements(signsElements: string[]): void {
     signsElements.forEach((sign: string) => {
       const element: HTMLElement | undefined = this.elements.get(sign);
+      const isWinCondition = element?.classList.contains(AnimationCssClasses.WIN_CONDITION);
+      if (isWinCondition) element?.classList.remove(AnimationCssClasses.WIN_CONDITION);
       element?.classList.add(AnimationCssClasses.SHAKE);
+
       setTimeout(() => {
         element?.classList.remove(AnimationCssClasses.SHAKE);
+        if (isWinCondition) element?.classList.add(AnimationCssClasses.WIN_CONDITION);
       }, AnimationConstants.WRONG_DURATION);
     });
   }
@@ -92,9 +98,6 @@ export default class TableView extends View {
     if (markup.signElement) {
       result.setAttribute(Constants.ATTRIBUTE_SIGN_NAME, markup.signElement);
       this.elements.set(markup.signElement, result.getElement());
-    }
-    if (markup.idName) {
-      result.setAttribute('id', markup.idName);
     }
     if (markup.winCondition) result.addCssClasses([AnimationCssClasses.WIN_CONDITION]);
     if (markup.children && markup.children.length) {
@@ -134,7 +137,7 @@ export default class TableView extends View {
     result = `<${tagName}`;
     result += className ? ` class="${className}"` : '';
     result += id ? ` id="${id}"` : '';
-    result += `> </${tagName}>`;
+    result += element.children.length ? `> </${tagName}>` : ' />';
     return result;
   }
 }

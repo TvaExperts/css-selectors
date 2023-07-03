@@ -5,7 +5,8 @@ import CodeViewerView from './code-viewer/code-viewer-view';
 import CssSelectorView from './css-selector/css-selector-view';
 import { Level } from '../controller/types';
 import { CssClasses, TextHTML, LinkHTML } from './types';
-import { AnimationCssClasses, AnimationConstants } from '../util/animation/types';
+import { AnimationCssClasses, AnimationConstants } from '../../sass/animation/types';
+import GlobalCssClasses from '../../sass/types';
 
 export default class AppView {
   private asideView: AsideView;
@@ -30,8 +31,8 @@ export default class AppView {
 
     this.helpButton = new ElementCreator({
       tag: 'div',
-      classNames: [CssClasses.MAIN_HELP],
-      textContent: TextHTML.MAIN_HELP,
+      classNames: [CssClasses.HEADER_HELP, GlobalCssClasses.BUTTON],
+      textContent: TextHTML.HEADER_HELP,
     });
 
     this.mainTitle = new ElementCreator({
@@ -120,6 +121,14 @@ export default class AppView {
       classNames: [CssClasses.HEADER],
       textContent: '',
     });
+
+    const logeElementCreator: ElementCreator = new ElementCreator({
+      tag: 'div',
+      classNames: [CssClasses.HEADER_LOGO],
+      textContent: TextHTML.HEADER_LOGO,
+    });
+    headerElementCreator.addInnerElement(logeElementCreator.getElement());
+    headerElementCreator.addInnerElement(this.helpButton.getElement());
     document.body.append(headerElementCreator.getElement());
   }
 
@@ -130,7 +139,6 @@ export default class AppView {
       textContent: '',
     });
     mainElementCreator.addInnerElement(this.mainTitle.getElement());
-    mainElementCreator.addInnerElement(this.helpButton.getElement());
     mainElementCreator.addInnerElement(this.tableView.getHtmlElement());
     this.editor.addInnerElement(this.cssSelectorView.getHtmlElement());
     this.editor.addInnerElement(this.codeView.getHtmlElement());
@@ -140,8 +148,8 @@ export default class AppView {
 
   private buildFooter(): void {
     const footerElementCreator: ElementCreator = new ElementCreator({
-      tag: 'header',
-      classNames: [CssClasses.HEADER],
+      tag: 'footer',
+      classNames: [CssClasses.FOOTER],
       textContent: '',
     });
     const gitElementCreator: ElementCreator = new ElementCreator({

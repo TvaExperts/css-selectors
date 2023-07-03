@@ -7,7 +7,7 @@ enum CssClasses {
 
 const Constants = {
   ATTRIBUTE_SIGN_NAME: 'data-sign',
-  LINES_COUNT: 15,
+  LINES_COUNT: 17,
 };
 
 export { CssClasses, Constants };

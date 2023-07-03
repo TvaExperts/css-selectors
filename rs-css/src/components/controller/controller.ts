@@ -1,6 +1,6 @@
 import Model from './model';
 import AppView from '../view/appView';
-import { AnimationConstants } from '../util/animation/types';
+import { AnimationConstants } from '../../sass/animation/types';
 
 export default class Controller {
   private model: Model;

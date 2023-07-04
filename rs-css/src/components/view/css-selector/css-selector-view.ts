@@ -99,7 +99,7 @@ export default class CssSelectorView extends View {
   private getHighlightedCustomTags(str: string): string {
     let result = str;
     Constants.CUSTOM_CSS_TAGS.forEach((tag: string) => {
-      if (result.includes(tag)) result = result.replace(tag, `<span class='hljs-selector-tag'>${tag}</span>`);
+      if (result.includes(tag)) result = result.replaceAll(tag, `<span class='hljs-selector-tag'>${tag}</span>`);
     });
     return result;
   }

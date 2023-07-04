@@ -218,10 +218,10 @@ const LevelData: LevelConfigs[] = [
         children: [
           {
             tagName: 'apple',
+            className: 'yellow',
           },
           {
             tagName: 'apple',
-            className: 'yellow',
           },
         ],
       },

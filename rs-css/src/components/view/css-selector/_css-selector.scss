@@ -7,6 +7,7 @@
   font-family: 'Roboto Mono';
   text-transform: none;
   @extend %shadow-dark;
+  background-color: $color-main;
 
   @include media-tablet {
     height: 32px;

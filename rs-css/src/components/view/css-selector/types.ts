@@ -13,6 +13,7 @@ enum TextHTML {
 const Constants = {
   HINT_ANIMATION_DURATION: 300,
   INPUT_BASIC_TEXT_COLOR: '#00bfff',
+  CUSTOM_CSS_TAGS: ['apple', 'plate', 'orange'],
 };
 
 export { CssClasses, TextHTML, Constants };

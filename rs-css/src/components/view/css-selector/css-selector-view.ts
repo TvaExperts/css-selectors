@@ -4,6 +4,7 @@ import ElementCreator from '../../util/element-creator';
 import { getHighlightedCss } from '../../util/highlight-js';
 import GlobalCssClasses from '../../../sass/types';
 import { CssClasses, TextHTML, Constants } from './types';
+import { AnimationCssClasses } from '../../../sass/animation/types';
 
 export default class CssSelectorView extends View {
   private buttonEnter: ElementCreator;
@@ -13,7 +14,7 @@ export default class CssSelectorView extends View {
   constructor() {
     const params: ViewParams = {
       tag: 'div',
-      classNames: [CssClasses.CSS_SELECTOR],
+      classNames: [CssClasses.CSS_SELECTOR, AnimationCssClasses.BLINK_BACKGROUND],
     };
     super(params);
 
@@ -91,7 +92,16 @@ export default class CssSelectorView extends View {
 
   private changeInputText(): void {
     this.input.value = this.thimCustomSpaces(this.input.value);
-    this.visibleInput.getElement().innerHTML = getHighlightedCss(this.input.value);
+    const highlightedBasicCss: string = getHighlightedCss(this.input.value);
+    this.visibleInput.getElement().innerHTML = this.getHighlightedCustomTags(highlightedBasicCss);
+  }
+
+  private getHighlightedCustomTags(str: string): string {
+    let result = str;
+    Constants.CUSTOM_CSS_TAGS.forEach((tag: string) => {
+      if (result.includes(tag)) result = result.replace(tag, `<span class='hljs-selector-tag'>${tag}</span>`);
+    });
+    return result;
   }
 
   private thimCustomSpaces(str: string): string {
